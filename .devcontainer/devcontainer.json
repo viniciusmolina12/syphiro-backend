@@ -3,6 +3,7 @@
   "dockerFile": "Dockerfile",
   "context": "..",
   "workspaceFolder": "/workspaces/app",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/app,type=bind,consistency=cached",
   "forwardPorts": [3000],
   "postCreateCommand": "npm install",
   "customizations": {
