@@ -1,4 +1,4 @@
-import { Progression } from "../../../@shared/domain/progression.vo";
+import { Progression } from "../../@shared/domain/progression.vo";
 
 
 export class CharacterProgression extends Progression {

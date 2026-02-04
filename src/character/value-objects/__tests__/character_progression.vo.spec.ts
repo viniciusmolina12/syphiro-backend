@@ -1,4 +1,4 @@
-import { InvalidProgressionError, PROGRESSION_RULES } from "../../../../@shared/domain/progression.vo";
+import { InvalidProgressionError, PROGRESSION_RULES } from "../../../@shared/domain/progression.vo";
 import { CharacterProgression } from "../character_progression.vo";
 
 describe('CharacterProgression Value Object', () => {
