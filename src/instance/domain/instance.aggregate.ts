@@ -1,17 +1,20 @@
-import { ValueObject } from "../../@shared/value-object";
+import { EntityId } from "../../@shared/entity-id.vo";
 
-export class InstanceId extends ValueObject {
-    public readonly value: number;
-    private constructor(value: number) {
-        super();
-        this.value = value;
-    }
+export class InstanceId extends EntityId {}
+
+interface InstanceConstructorProps {
+    id?: InstanceId;
 }
 
 export class Instance {
+    public readonly id: InstanceId;
     private constructor(
-        public readonly id: InstanceId,
+        props?: InstanceConstructorProps,
     ) {
-        this.id = id;
+        this.id = props?.id ?? new InstanceId();
+    }
+
+    static create(): Instance {
+        return new Instance();
     }
 }
