@@ -1,12 +1,13 @@
-import { v4 as uuidv4 } from 'uuid';
+
 import { ValueObject } from './value-object';
+import { randomUUID } from 'crypto';
 
 export abstract class EntityId extends ValueObject {
     protected readonly value: string
   
     constructor(value?: string) {
        super();
-       this.value = value ?? uuidv4()
+       this.value = value ?? randomUUID()
     }
   
     equals(id: EntityId): boolean {
