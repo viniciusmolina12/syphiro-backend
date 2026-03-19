@@ -4,7 +4,7 @@ import { Instance, InstanceId } from "../../../../instance/domain/instance.aggre
 import { IInstanceRepository } from "../../../../instance/domain/repositories/instance.repository";
 import { PlayerId } from "../../../../player/domain/player.aggregate";
 import { Character } from "../../../domain/character.aggregate";
-import { Class, ClassId } from "../../../domain/entities/class";
+import { Class, ClassId } from "../../../../class/domain/class.aggregate";
 import { ICharacterRepository } from "../../../domain/repositories/character.repository";
 import { IClassRepository } from "../../../domain/repositories/class.repository";
 import { ClassExistsByIdValidation } from "../../validations/class_exists_by_id.validation";

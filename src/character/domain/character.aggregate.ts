@@ -1,6 +1,6 @@
 import { EntityId } from "../../@shared/entity-id.vo";
 import { InstanceId } from "../../instance/domain/instance.aggregate";
-import { Class } from "./entities/class";
+import { Class } from "../../class/domain/class.aggregate";
 import { Inventory } from "./entities/inventory";
 import { CharacterProgression } from "./value-objects/character_progression.vo";
 import { ProfessionProgression } from "./value-objects/profession_progression.vo";
@@ -24,6 +24,7 @@ interface CharacterCreateCommand {
     player_id: PlayerId;
     instance_id: InstanceId;
     class: Class;
+    professions: ProfessionProgression[];
 }
 
 export class Character extends AggregateRoot { 
@@ -50,6 +51,10 @@ export class Character extends AggregateRoot {
     }
 
     static create(command: CharacterCreateCommand): Either<Character, Error> {
-        return Either.safe(() => new Character({ instance_id: command.instance_id, class: command.class, player_id: command.player_id }));
+        return Either.safe(() => new Character({ instance_id: command.instance_id, class: command.class, player_id: command.player_id, professions_progressions: command.professions }));
+    }
+
+    applyDamage(damage: number) {
+        //TODO - Implementar apply damage
     }
 }   
