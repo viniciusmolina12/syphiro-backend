@@ -34,7 +34,7 @@ export class Combatant {
         return new Combatant({ reference_id, type: CombatantType.ENEMY });
     }
 
-    isPlayer(): this is Combatant & { reference_id: CharacterId } {
+    isCharacter(): this is Combatant & { reference_id: CharacterId } {
         return this.type === CombatantType.PLAYER;
     }
 
