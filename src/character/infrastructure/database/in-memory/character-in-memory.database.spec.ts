@@ -1,7 +1,7 @@
 import { InstanceId } from "../../../../instance/domain/instance.aggregate";
 import { PlayerId } from "../../../../player/domain/player.aggregate";
 import { Character } from "../../../domain/character.aggregate";
-import { Class, ClassId } from "../../../domain/entities/class";
+import { Class, ClassId } from "../../../../class/domain/class.aggregate";
 import { CharacterInMemoryDatabase } from "./character-in-memory.database";
 
 describe('CharacterInMemoryDatabase', () => {

@@ -1,5 +1,5 @@
 import { Either } from "../../../@shared/either";
-import { Class, ClassId } from "../../domain/entities/class";
+import { Class, ClassId } from "../../../class/domain/class.aggregate";
 import { IClassRepository } from "../../domain/repositories/class.repository";
 
 export class ClassExistsByIdValidation {

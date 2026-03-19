@@ -1,4 +1,5 @@
-import { EntityId } from "../../../@shared/entity-id.vo";
+import { AggregateRoot } from "../../@shared/domain/aggregate-root";
+import { EntityId } from "../../@shared/entity-id.vo";
 import { ClassSkill } from "./class_skill";
 
 
@@ -16,7 +17,7 @@ interface ClassConstructorProps {
     skills: ClassSkill[];
 }
 
-export class Class {
+export class Class extends AggregateRoot {
     public readonly id: ClassId;
     public readonly name: string;
     public readonly description: string;
@@ -24,6 +25,7 @@ export class Class {
     public readonly skills: ClassSkill[];
 
     public constructor(props: ClassConstructorProps) {
+        super();
         this.id = props.id ?? new ClassId();
         this.name = props.name;
         this.description = props.description;

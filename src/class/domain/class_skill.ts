@@ -1,4 +1,4 @@
-import { EntityId } from "../../../@shared/entity-id.vo";
+import { EntityId } from "../../@shared/entity-id.vo";
 
 export class ClassSkillId extends EntityId {}
 
@@ -15,6 +15,16 @@ interface ClassSkillConstructorProps {
     description: string;
     icon: string;
     cooldown: number;
+    base_damage: number;
+    type: SkillType;
+}
+
+export interface ClassSkillCreateCommand {
+    name: string;
+    description: string;
+    icon: string;
+    cooldown: number;
+    base_damage: number;
     type: SkillType;
 }
 
@@ -25,6 +35,7 @@ export class ClassSkill {
     public readonly icon: string;
     public readonly cooldown: number;
     public readonly type: SkillType;
+    public readonly base_damage: number;
 
     private constructor(props: ClassSkillConstructorProps) {
         this.id = props.id ?? new ClassSkillId();
@@ -33,5 +44,10 @@ export class ClassSkill {
         this.icon = props.icon;
         this.cooldown = props.cooldown;
         this.type = props.type;
+        this.base_damage = props.base_damage;
+    }
+
+    static create(command: ClassSkillCreateCommand): ClassSkill {
+        return new ClassSkill(command);
     }
 }
