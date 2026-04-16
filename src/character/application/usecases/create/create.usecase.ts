@@ -34,7 +34,7 @@ export class CreateCharacterUsecase {
         const [class_character, class_not_exists] = (await this.classExistsByIdValidation.validate(new ClassId(class_id))).asArray();
         const [professions_character, professions_not_exists] = (await this.professionsExistsByIdsValidation.validate(professions)).asArray();
         const professions_progressions = professions_character.map(profession => ProfessionProgression.create<ProfessionProgression>(0).ok);
-        const [character, character_error] = Character.create({class: class_character, instance_id: new InstanceId(instance_id), player_id, professions: professions_character}).asArray();
+        const [character, character_error] = Character.create({class: class_character, instance_id: new InstanceId(instance_id), player_id, professions: professions_progressions}).asArray();
         
         const notification = character.notification;
         if(instance_not_exists) notification.addError(instance_not_exists.message)
@@ -43,7 +43,7 @@ export class CreateCharacterUsecase {
         if(character_error) notification.addError(character_error.message)
 
         if(notification.hasErrors()) throw new Error(notification.getErrorsMessages())
-        await this.characterRepository.create(character);
+        await this.characterRepository.save(character);
         return {character};
     }
 }

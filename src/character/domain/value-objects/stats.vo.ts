@@ -16,7 +16,13 @@ export class Stats extends ValueObject {
     }
 
     static create(health: number): Either<Stats, InvalidStatsError> {
+        health = health < STATS_RULES.MIN_HEALTH.value ?  STATS_RULES.MIN_HEALTH.value : health;
         return Either.safe(() => new Stats(health));
+    }
+
+    updateHealth(health: number): Stats {
+        health = health < STATS_RULES.MIN_HEALTH.value ? STATS_RULES.MIN_HEALTH.value : health;
+        return new Stats(health);
     }
 
     validate(): void {
