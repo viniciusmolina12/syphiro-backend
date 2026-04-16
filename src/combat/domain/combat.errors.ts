@@ -1,7 +1,9 @@
 export class CombatNotFoundError extends Error {
     constructor() { super('Combate não encontrado'); }
 }
-
+export class CombatantsEmptyError extends Error {
+    constructor() { super('Numero de combatentes insuficiente.'); }
+}
 export class CombatantNotFoundError extends Error {
     readonly combatantId: string;
     constructor(id: string) {

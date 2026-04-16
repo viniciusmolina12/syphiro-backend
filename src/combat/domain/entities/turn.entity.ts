@@ -9,6 +9,7 @@ interface TurnConstructorProps {
     id?: TurnId
     moves?: Move[];
     round: number;
+    active: boolean;
     current_combatant: CombatantId;
 }
 
@@ -32,19 +33,21 @@ export class Turn {
     public readonly id: TurnId;
     public readonly moves: Move[];
     public readonly round: number;
-    public current_combatant: CombatantId;
+    private _active: boolean;
+    private _current_combatant: CombatantId;
 
     private constructor(props: TurnConstructorProps) {
         this.id = props.id ?? new TurnId();
         this.moves = props.moves ?? [];
         this.round = props.round;
-        this.current_combatant = props.current_combatant;
+        this._current_combatant = props.current_combatant;
+        this._active = props.active;
     }
 
     static create(command: TurnCreateCommand): Either<Turn, InvalidTurnError> {
         return Either.safe(() => {
             this.validate(command);
-            return new Turn({ ...command });
+            return new Turn({ ...command, active: true });
         });
     }
 
@@ -62,9 +65,21 @@ export class Turn {
         this.moves.push(move);
     }
 
-    public changeCurrentCombatant(combatant_id: CombatantId) {
-        this.current_combatant = combatant_id;
+    public inactiveTurn(): void {
+        this._active = false;
     }
+
+    public changeCurrentCombatant(combatant_id: CombatantId) {
+        this._current_combatant = combatant_id;
+    }
+
+    public get current_combatant(): CombatantId {
+        return this._current_combatant;
+    }
+    public get active(): boolean {
+        return this._active;
+    }
+ 
 }
 
 

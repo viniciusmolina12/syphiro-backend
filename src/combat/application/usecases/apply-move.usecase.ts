@@ -1,17 +1,17 @@
 import { Either } from "../../../@shared/either";
 import { Character } from "../../../character/domain/character.aggregate";
 import { ICharacterRepository } from "../../../character/domain/repositories/character.repository";
-import { ClassSkillId } from "../../../class/domain/class_skill";
-import { IClassSkillRepository } from "../../../class/domain/repositories/class-skill.repository";
 import { Enemy } from "../../../enemy/domain/enemy.aggregate";
 import { IEnemyRepository } from "../../../enemy/domain/repositories/enemy.repository";
-import { CombatId } from "../../domain/combat.aggregate";
+import { SkillId } from "../../../skill/domain/skill.entity";
+import { ISkillRepository } from "../../../skill/domain/repositories/skill.repository";
+import { Combat, CombatId } from "../../domain/combat.aggregate";
 import { CombatantNotFoundError, CombatNotFoundError, NotCombatantTurnError, SkillNotFoundError, SkillNotOwnedError } from "../../domain/combat.errors";
 import { Combatant, CombatantId } from "../../domain/entities/combatant.entity";
 import { ICombatRepository } from "../../domain/repositories/combat.repository";
 import { CalculateCharacterDamageService } from "../../domain/services/calculate-character-damage.service";
 
-type ApplyMoveError = 
+type ApplyMoveError =
     | CombatNotFoundError
     | CombatantNotFoundError
     | SkillNotFoundError
@@ -20,25 +20,30 @@ type ApplyMoveError =
 
 export interface ApplyMoveCommand {
     combat_id: CombatId;
-    skill_id: ClassSkillId;
+    skill_id: SkillId;
     combatant_id: CombatantId;
     target_combatant_id: CombatantId;
 }
-
+export interface ApplyMoveResult {
+   combat: Combat;
+}
 export class ApplyMoveUsecase {
     constructor(
         private readonly combatRepository: ICombatRepository,
         private readonly characterRepository: ICharacterRepository,
         private readonly enemyRepository: IEnemyRepository,
-        private readonly classSkillRepository: IClassSkillRepository,
+        private readonly skillRepository: ISkillRepository,
         private readonly calculateCharacterDamageService: CalculateCharacterDamageService,
     ) {}
 
-    async execute(command: ApplyMoveCommand): Promise<Either<void, ApplyMoveError>> {
+    async execute(command: ApplyMoveCommand): Promise<Either<ApplyMoveResult, ApplyMoveError>> {
         const { combat_id, skill_id, combatant_id, target_combatant_id } = command;
 
         const combat = await this.combatRepository.findById(combat_id);
         if (!combat) return Either.fail(new CombatNotFoundError());
+
+        const combat_result = combat.act(combatant_id, target_combatant_id);
+        if (combat_result.isFail()) return Either.fail(combat_result.error);
 
         const combatant = combat.combatants.find(c => c.id.equals(combatant_id));
         if (!combatant) return Either.fail(new CombatantNotFoundError(combatant_id.toString()));
@@ -46,7 +51,7 @@ export class ApplyMoveUsecase {
         const target_combatant = combat.combatants.find(c => c.id.equals(target_combatant_id));
         if (!target_combatant) return Either.fail(new CombatantNotFoundError(target_combatant_id.toString()));
 
-        const skill = await this.classSkillRepository.findById(skill_id);
+        const skill = await this.skillRepository.findById(skill_id);
         if (!skill) return Either.fail(new SkillNotFoundError());
 
         const source = await this.getCombatantEntity(combatant);
@@ -55,24 +60,25 @@ export class ApplyMoveUsecase {
         const target = await this.getCombatantEntity(target_combatant);
         if (!target) return Either.fail(new CombatantNotFoundError(target_combatant.reference_id.toString()));
 
-        const combat_result = combat.act(combatant_id, target_combatant_id);
-        if (combat_result.isFail()) return Either.fail(combat_result.error);
+        if (!source.hasSkill(skill_id)) return Either.fail(new SkillNotOwnedError());
 
         if (source instanceof Character) {
-            const characterHasSkill = source.class.skills.some(s => s.id.equals(skill_id));
-            if (!characterHasSkill) return Either.fail(new SkillNotOwnedError());
-
             const damage = this.calculateCharacterDamageService.execute({ character: source, target, skill });
             target.applyDamage(damage);
-            await this.enemyRepository.save(target as Enemy);
+            if (target.isDead()) combat.disableCombatant(target_combatant_id);
+            await this.enemyRepository.update(target as Enemy);
         } else {
-            // TODO - Implementar enemy damage
+            const damage = source.skills.find(s => s.id.equals(skill_id))!.base_damage;
+            console.log('DAMAGE', damage)
+            target.applyDamage(damage);
+            if (target.isDead()) combat.disableCombatant(target_combatant_id);
+            await this.characterRepository.update(target as Character);
         }
-
-        await this.combatRepository.save(combat);
-        return Either.ok(undefined);
+        
+        combat.tryMarkCombatOver();
+        await this.combatRepository.update(combat);
+        return Either.ok({ combat });
     }
-
 
     private async getCombatantEntity(combatant: Combatant) {
         return combatant.isCharacter()
