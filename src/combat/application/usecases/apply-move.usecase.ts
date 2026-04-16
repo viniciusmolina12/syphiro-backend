@@ -42,14 +42,14 @@ export class ApplyMoveUsecase {
         const combat = await this.combatRepository.findById(combat_id);
         if (!combat) return Either.fail(new CombatNotFoundError());
 
-        const combat_result = combat.act(combatant_id, target_combatant_id);
-        if (combat_result.isFail()) return Either.fail(combat_result.error);
-
         const combatant = combat.combatants.find(c => c.id.equals(combatant_id));
         if (!combatant) return Either.fail(new CombatantNotFoundError(combatant_id.toString()));
 
         const target_combatant = combat.combatants.find(c => c.id.equals(target_combatant_id));
         if (!target_combatant) return Either.fail(new CombatantNotFoundError(target_combatant_id.toString()));
+
+        const combat_result = combat.act(combatant_id, target_combatant_id);
+        if (combat_result.isFail()) return Either.fail(combat_result.error);
 
         const skill = await this.skillRepository.findById(skill_id);
         if (!skill) return Either.fail(new SkillNotFoundError());
@@ -69,7 +69,6 @@ export class ApplyMoveUsecase {
             await this.enemyRepository.update(target as Enemy);
         } else {
             const damage = source.skills.find(s => s.id.equals(skill_id))!.base_damage;
-            console.log('DAMAGE', damage)
             target.applyDamage(damage);
             if (target.isDead()) combat.disableCombatant(target_combatant_id);
             await this.characterRepository.update(target as Character);
