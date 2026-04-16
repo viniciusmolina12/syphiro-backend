@@ -1,4 +1,5 @@
 import { Either } from "../../../@shared/either";
+import { InstanceNotFoundError } from "../../domain/errors/instance-not-found.error";
 import { InstanceId } from "../../domain/instance.aggregate";
 import { IInstanceRepository } from "../../domain/repositories/instance.repository";
 
@@ -9,16 +10,9 @@ export class InstanceExistsByIdValidation {
         const exists = await this.instanceRepository.existsById(instance_id);
         return Either.safe(() => {
             if (!exists) {
-                throw new InstanceNotFoundError('Instance not found');
+                throw new InstanceNotFoundError();
             }
             return true;
         });
-    }
-}
-
-export class InstanceNotFoundError extends Error {
-    constructor(message: string) {
-        super(message);
-        this.name = 'InstanceNotFoundError';
     }
 }
