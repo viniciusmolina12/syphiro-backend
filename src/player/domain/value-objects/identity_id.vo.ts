@@ -18,7 +18,7 @@ export class InvalidIdentityIdError extends Error {
 export class IdentityId extends ValueObject {
     public readonly value: string;
 
-    private constructor(value: string) {
+    constructor(value: string) {
         super();
         this.value = value;
     }

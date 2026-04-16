@@ -7,18 +7,27 @@ import { PlayerCreatedEvent } from '@player/domain/events/player-created.event';
 
 export class PlayerId extends EntityId {}
 
+export interface PlayerConstructorProps {
+    id: PlayerId;
+    identityId: IdentityId;
+    name: Name;
+}
+
 export interface CreatePlayerCommand {
     identityId: string;
     name: string;
 }
 
 export class Player extends AggregateRoot {
-    private constructor(
-        public readonly id: PlayerId,
-        public readonly identityId: IdentityId,
-        public readonly name: Name,
-    ) {
+    public readonly id: PlayerId;
+    public readonly identityId: IdentityId;
+    public readonly name: Name;
+    private constructor(props: PlayerConstructorProps)
+     {
         super();
+        this.id = props.id;
+        this.identityId = props.identityId;
+        this.name = props.name;      
     }
 
     static create(command: CreatePlayerCommand): Either<Player, InvalidIdentityIdError | InvalidNameError> {
@@ -28,7 +37,7 @@ export class Player extends AggregateRoot {
         const [name, nameError] = Name.create(command.name).asArray();
         if (nameError) return Either.fail(nameError);
 
-        const player = new Player(new PlayerId(), identityId, name);
+        const player = new Player({ id: new PlayerId(), identityId, name });
         player.addDomainEvent(
             new PlayerCreatedEvent({
                 playerId: player.id,
@@ -37,5 +46,12 @@ export class Player extends AggregateRoot {
             }),
         );
         return Either.ok(player);
+    }
+
+
+    static rehydrate(props: PlayerConstructorProps): Player {
+        return new Player(
+            { id: props.id, identityId: props.identityId, name: props.name },
+        );
     }
 }
