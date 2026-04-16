@@ -150,8 +150,21 @@ describe('JoinInstanceUsecase', () => {
 
         it('deve falhar se a instância estiver com status COMPLETED', async () => {
             const { usecase, instanceRepository } = makeSut();
-            const instance = makePendingInstance();
+            const instance = makeRunningInstance();
             instance.complete();
+            instanceRepository.instances.push(instance);
+
+            const [_, error] = (
+                await usecase.execute({ player_id: new PlayerId(), instance_id: instance.id.toString() })
+            ).asArray();
+
+            expect(error).toBeInstanceOf(InstanceNotPendingError);
+        });
+
+        it('deve falhar se a instância estiver com status ABANDONED', async () => {
+            const { usecase, instanceRepository } = makeSut();
+            const instance = makePendingInstance();
+            instance.abandon();
             instanceRepository.instances.push(instance);
 
             const [_, error] = (

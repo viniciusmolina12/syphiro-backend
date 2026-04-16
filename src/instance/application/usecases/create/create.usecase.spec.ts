@@ -97,12 +97,12 @@ describe('CreateInstanceUsecase', () => {
             expect(saved).not.toBeNull();
         });
 
-        it('deve permitir que um jogador crie nova instância após a anterior ser concluída', async () => {
+        it('deve permitir que um jogador crie nova instância após a anterior ser abandonada', async () => {
             const { usecase, instanceRepository } = makeSut();
             const player_id = new PlayerId();
 
             const [first] = (await usecase.execute(makeInput({ player_id }))).asArray();
-            first.complete();
+            first.abandon();
 
             const [second, error] = (await usecase.execute(makeInput({ player_id }))).asArray();
 
