@@ -13,14 +13,14 @@ export class CreatePlayerUsecase {
     async execute(
         input: CreatePlayerCommand,
     ): Promise<Either<Player, CreatePlayerError>> {
-        const [identityId, identityIdError] = IdentityId.create(input.identityId).asArray();
-        if (identityIdError) return Either.fail(identityIdError);
+        const [identity_id, identity_id_error] = IdentityId.create(input.identityId).asArray();
+        if (identity_id_error) return Either.fail(identity_id_error);
 
-        const alreadyExists = await this.playerRepository.existsByIdentityId(identityId);
-        if (alreadyExists) return Either.fail(new PlayerAlreadyExistsError());
+        const player_already_exists = await this.playerRepository.existsByIdentityId(identity_id);
+        if (player_already_exists) return Either.fail(new PlayerAlreadyExistsError());
 
-        const [player, playerError] = Player.create(input).asArray();
-        if (playerError) return Either.fail(playerError);
+        const [player, player_error] = Player.create(input).asArray();
+        if (player_error) return Either.fail(player_error);
 
         await this.playerRepository.save(player);
         return Either.ok(player);
