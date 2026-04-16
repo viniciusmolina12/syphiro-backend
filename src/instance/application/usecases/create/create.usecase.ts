@@ -1,9 +1,9 @@
-import { Either } from '../../../../@shared/either';
-import { PlayerId } from '../../../../player/domain/player.aggregate';
-import { Instance, CreateInstanceCommand } from '../../../domain/instance.aggregate';
-import { PlayerAlreadyHasActiveInstanceError } from '../../../domain/errors';
-import { IInstanceRepository } from '../../../domain/repositories/instance.repository';
-import { InstanceDifficulty } from '../../../domain/instance.aggregate';
+import { Either } from '@shared/either';
+import { PlayerId } from '@player/domain/player.aggregate';
+import { Instance, CreateInstanceCommand } from '@instance/domain/instance.aggregate';
+import { PlayerAlreadyHasActiveInstanceError } from '@instance/domain/errors';
+import { IInstanceRepository } from '@instance/domain/repositories/instance.repository';
+import { InstanceDifficulty } from '@instance/domain/instance.aggregate';
 
 interface CreateInstanceInput {
     player_id: PlayerId;

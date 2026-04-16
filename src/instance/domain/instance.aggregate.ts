@@ -1,8 +1,8 @@
-import { AggregateRoot } from '../../@shared/domain/aggregate-root';
-import { Either } from '../../@shared/either';
-import { EntityId } from '../../@shared/entity-id.vo';
-import { PlayerId } from '../../player/domain/player.aggregate';
-import { InstanceFullError, InstanceNotPendingError, InstanceNotRunningError, InsufficientPlayersError } from './errors';
+import { AggregateRoot } from '@shared/domain/aggregate-root';
+import { Either } from '@shared/either';
+import { EntityId } from '@shared/entity-id.vo';
+import { PlayerId } from '@player/domain/player.aggregate';
+import { InstanceFullError, InstanceNotPendingError, InstanceNotRunningError, InsufficientPlayersError } from '@instance/domain/errors';
 
 export class InstanceId extends EntityId {}
 

@@ -1,4 +1,4 @@
-import { InvalidNameError, NAME_RULES, Name } from "../name.vo";
+import { InvalidNameError, NAME_RULES, Name } from "@player/domain/value-objects/name.vo";
 
 describe('Name Value Object', () => {
     it('should be able to create a name', () => {

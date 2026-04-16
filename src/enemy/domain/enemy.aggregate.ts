@@ -1,8 +1,8 @@
-import { AggregateRoot } from "../../@shared/domain/aggregate-root";
-import { EntityId } from "../../@shared/entity-id.vo";
-import { Skill, SkillId } from "../../skill/domain/skill.entity";
-import { EnemyDiedEvent } from "./events/enemy-died.event";
-import { EnemyStats } from "./value-objects/enemy-stats.vo";
+import { AggregateRoot } from "@shared/domain/aggregate-root";
+import { EntityId } from "@shared/entity-id.vo";
+import { Skill, SkillId } from "@skill/domain/skill.entity";
+import { EnemyDiedEvent } from "@enemy/domain/events/enemy-died.event";
+import { EnemyStats } from "@enemy/domain/value-objects/enemy-stats.vo";
 
 export class EnemyId extends EntityId {}
 

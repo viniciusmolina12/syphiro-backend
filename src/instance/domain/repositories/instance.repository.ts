@@ -1,5 +1,5 @@
-import { PlayerId } from '../../../player/domain/player.aggregate';
-import { Instance, InstanceId } from '../instance.aggregate';
+import { PlayerId } from '@player/domain/player.aggregate';
+import { Instance, InstanceId } from '@instance/domain/instance.aggregate';
 
 export interface IInstanceRepository {
     findById(id: InstanceId): Promise<Instance | null>;

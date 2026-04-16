@@ -1,5 +1,5 @@
-import { Either } from "../../../@shared/either";
-import { ValueObject } from "../../../@shared/value-object";
+import { Either } from "@shared/either";
+import { ValueObject } from "@shared/value-object";
 
 export const NAME_RULES = {
     MIN_LENGTH: {

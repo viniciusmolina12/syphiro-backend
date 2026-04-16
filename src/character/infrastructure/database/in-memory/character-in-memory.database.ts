@@ -1,6 +1,6 @@
-import { InstanceId } from "../../../../instance/domain/instance.aggregate";
-import { Character, CharacterId } from "../../../domain/character.aggregate";
-import { ICharacterRepository } from "../../../domain/repositories/character.repository";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { Character, CharacterId } from "@character/domain/character.aggregate";
+import { ICharacterRepository } from "@character/domain/repositories/character.repository";
 
 export class CharacterInMemoryDatabase implements ICharacterRepository {
     private characters: Character[] = [];

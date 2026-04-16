@@ -1,11 +1,11 @@
-import { AggregateRoot } from "../../@shared/domain/aggregate-root";
-import { Either } from "../../@shared/either";
-import { EntityId } from "../../@shared/entity-id.vo";
-import { CombatantsEmptyError, NotCombatantTurnError } from "./errors";
-import { Combatant, CombatantId, CombatantType } from "./entities/combatant.entity";
-import { Turn } from "./entities/turn.entity";
-import { InstanceId } from "../../instance/domain/instance.aggregate";
-import { Move } from "./entities/move.entity";
+import { AggregateRoot } from "@shared/domain/aggregate-root";
+import { Either } from "@shared/either";
+import { EntityId } from "@shared/entity-id.vo";
+import { CombatantsEmptyError, NotCombatantTurnError } from "@combat/domain/errors";
+import { Combatant, CombatantId, CombatantType } from "@combat/domain/entities/combatant.entity";
+import { Turn } from "@combat/domain/entities/turn.entity";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { Move } from "@combat/domain/entities/move.entity";
 
 export class CombatId extends EntityId {}
 

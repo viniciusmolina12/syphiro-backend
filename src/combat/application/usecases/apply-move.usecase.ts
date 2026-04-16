@@ -1,15 +1,15 @@
-import { Either } from "../../../@shared/either";
-import { Character } from "../../../character/domain/character.aggregate";
-import { ICharacterRepository } from "../../../character/domain/repositories/character.repository";
-import { Enemy } from "../../../enemy/domain/enemy.aggregate";
-import { IEnemyRepository } from "../../../enemy/domain/repositories/enemy.repository";
-import { SkillId } from "../../../skill/domain/skill.entity";
-import { ISkillRepository } from "../../../skill/domain/repositories/skill.repository";
-import { Combat, CombatId } from "../../domain/combat.aggregate";
-import { CombatantNotFoundError, CombatNotFoundError, NotCombatantTurnError, SkillNotFoundError, SkillNotOwnedError } from "../../domain/errors";
-import { Combatant, CombatantId } from "../../domain/entities/combatant.entity";
-import { ICombatRepository } from "../../domain/repositories/combat.repository";
-import { CalculateCharacterDamageService } from "../../domain/services/calculate-character-damage.service";
+import { Either } from "@shared/either";
+import { Character } from "@character/domain/character.aggregate";
+import { ICharacterRepository } from "@character/domain/repositories/character.repository";
+import { Enemy } from "@enemy/domain/enemy.aggregate";
+import { IEnemyRepository } from "@enemy/domain/repositories/enemy.repository";
+import { SkillId } from "@skill/domain/skill.entity";
+import { ISkillRepository } from "@skill/domain/repositories/skill.repository";
+import { Combat, CombatId } from "@combat/domain/combat.aggregate";
+import { CombatantNotFoundError, CombatNotFoundError, NotCombatantTurnError, SkillNotFoundError, SkillNotOwnedError } from "@combat/domain/errors";
+import { Combatant, CombatantId } from "@combat/domain/entities/combatant.entity";
+import { ICombatRepository } from "@combat/domain/repositories/combat.repository";
+import { CalculateCharacterDamageService } from "@combat/domain/services/calculate-character-damage.service";
 
 type ApplyMoveError =
     | CombatNotFoundError

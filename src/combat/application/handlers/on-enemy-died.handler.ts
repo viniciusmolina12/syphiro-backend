@@ -1,6 +1,6 @@
-import { IEventHandler } from '../../../@shared/application/event-handler.interface';
-import { EnemyDiedEvent } from '../../../enemy/domain/events/enemy-died.event';
-import { ICombatRepository } from '../../domain/repositories/combat.repository';
+import { IEventHandler } from '@shared/application/event-handler.interface';
+import { EnemyDiedEvent } from '@enemy/domain/events/enemy-died.event';
+import { ICombatRepository } from '@combat/domain/repositories/combat.repository';
 
 export class OnEnemyDiedHandler implements IEventHandler<EnemyDiedEvent> {
     readonly eventName = 'EnemyDied';

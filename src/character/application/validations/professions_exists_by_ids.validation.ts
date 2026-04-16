@@ -1,6 +1,6 @@
-import { Either } from "../../../@shared/either";
-import { Profession, ProfessionId } from "../../../profession/domain/profession.aggregate";
-import { IProfessionRepository } from "../../domain/repositories/profession.repository";
+import { Either } from "@shared/either";
+import { Profession, ProfessionId } from "@profession/domain/profession.aggregate";
+import { IProfessionRepository } from "@character/domain/repositories/profession.repository";
 
 export class ProfessionsExistsByIdsValidation {
     constructor(private readonly professionRepository: IProfessionRepository) {}

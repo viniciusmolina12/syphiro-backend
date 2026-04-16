@@ -1,4 +1,4 @@
-import { Notification } from '../application/notification';
+import { Notification } from '@shared/application/notification';
 
 export abstract class Entity {
   notification: Notification = new Notification();

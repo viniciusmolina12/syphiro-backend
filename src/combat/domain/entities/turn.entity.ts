@@ -1,7 +1,7 @@
-import { Either } from "../../../@shared/either";
-import { EntityId } from "../../../@shared/entity-id.vo";
-import { CombatantId } from "./combatant.entity";
-import { Move } from "./move.entity";
+import { Either } from "@shared/either";
+import { EntityId } from "@shared/entity-id.vo";
+import { CombatantId } from "@combat/domain/entities/combatant.entity";
+import { Move } from "@combat/domain/entities/move.entity";
 
 class TurnId extends EntityId {}
 

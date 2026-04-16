@@ -1,5 +1,5 @@
 
-import { ValueObject } from './value-object';
+import { ValueObject } from '@shared/value-object';
 import { randomUUID } from 'crypto';
 
 export abstract class EntityId extends ValueObject {

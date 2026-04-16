@@ -1,6 +1,6 @@
-import { Either } from "../../../@shared/either";
-import { Class, ClassId } from "../../../class/domain/class.aggregate";
-import { IClassRepository } from "../../domain/repositories/class.repository";
+import { Either } from "@shared/either";
+import { Class, ClassId } from "@class/domain/class.aggregate";
+import { IClassRepository } from "@character/domain/repositories/class.repository";
 
 export class ClassExistsByIdValidation {
     constructor(private readonly classRepository: IClassRepository) {}

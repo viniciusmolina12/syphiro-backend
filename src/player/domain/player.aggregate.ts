@@ -1,7 +1,7 @@
-import { Either } from "../../@shared/either";
-import { EntityId } from "../../@shared/entity-id.vo";
-import { IdentityId } from "./value-objects/identity_id.vo";
-import { Name } from "./value-objects/name.vo";
+import { Either } from "@shared/either";
+import { EntityId } from "@shared/entity-id.vo";
+import { IdentityId } from "@player/domain/value-objects/identity_id.vo";
+import { Name } from "@player/domain/value-objects/name.vo";
 
 export class PlayerId extends EntityId {}
 

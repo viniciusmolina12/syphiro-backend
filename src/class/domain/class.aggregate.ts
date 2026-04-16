@@ -1,6 +1,6 @@
-import { AggregateRoot } from "../../@shared/domain/aggregate-root";
-import { EntityId } from "../../@shared/entity-id.vo";
-import { Skill } from "../../skill/domain/skill.entity";
+import { AggregateRoot } from "@shared/domain/aggregate-root";
+import { EntityId } from "@shared/entity-id.vo";
+import { Skill } from "@skill/domain/skill.entity";
 
 
 export class ClassId extends EntityId {

@@ -1,6 +1,6 @@
-import { PlayerId } from '../../player/domain/player.aggregate';
-import { INSTANCE_RULES, Instance, InstanceDifficulty, InstanceStatus } from './instance.aggregate';
-import { InstanceNotRunningError, InstanceNotPendingError, InsufficientPlayersError } from './errors';
+import { PlayerId } from '@player/domain/player.aggregate';
+import { INSTANCE_RULES, Instance, InstanceDifficulty, InstanceStatus } from '@instance/domain/instance.aggregate';
+import { InstanceNotRunningError, InstanceNotPendingError, InsufficientPlayersError } from '@instance/domain/errors';
 
 const makePendingInstance = () =>
     Instance.create({ player_id: new PlayerId(), difficulty: InstanceDifficulty.NORMAL });

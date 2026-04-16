@@ -1,8 +1,8 @@
-import { PlayerId } from '../../../../player/domain/player.aggregate';
-import { Instance, InstanceDifficulty, InstanceId, InstanceStatus } from '../../../domain/instance.aggregate';
-import { IInstanceRepository } from '../../../domain/repositories/instance.repository';
-import { PlayerAlreadyHasActiveInstanceError } from '../../../domain/errors';
-import { CreateInstanceUsecase } from './create.usecase';
+import { PlayerId } from '@player/domain/player.aggregate';
+import { Instance, InstanceDifficulty, InstanceId, InstanceStatus } from '@instance/domain/instance.aggregate';
+import { IInstanceRepository } from '@instance/domain/repositories/instance.repository';
+import { PlayerAlreadyHasActiveInstanceError } from '@instance/domain/errors';
+import { CreateInstanceUsecase } from '@instance/application/usecases/create/create.usecase';
 
 class InMemoryInstanceRepository implements IInstanceRepository {
     public instances: Instance[] = [];

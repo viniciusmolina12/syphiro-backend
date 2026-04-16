@@ -1,5 +1,5 @@
-import { EntityId } from "../../../@shared/entity-id.vo";
-import { CombatantId } from "./combatant.entity";
+import { EntityId } from "@shared/entity-id.vo";
+import { CombatantId } from "@combat/domain/entities/combatant.entity";
 
 class MoveId extends EntityId {}
 

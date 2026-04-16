@@ -1,12 +1,12 @@
-import { InstanceExistsByIdValidation } from "../../../../instance/application/validations/instance_exists_by_id.validation";
-import { InstanceId } from "../../../../instance/domain/instance.aggregate";
-import { PlayerId } from "../../../../player/domain/player.aggregate";
-import { Character } from "../../../domain/character.aggregate";
-import { ClassId } from "../../../../class/domain/class.aggregate";
-import { ICharacterRepository } from "../../../domain/repositories/character.repository";
-import { ProfessionProgression } from "../../../domain/value-objects/profession_progression.vo";
-import { ClassExistsByIdValidation } from "../../validations/class_exists_by_id.validation";
-import { ProfessionsExistsByIdsValidation } from "../../validations/professions_exists_by_ids.validation";
+import { InstanceExistsByIdValidation } from "@instance/application/validations/instance_exists_by_id.validation";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { PlayerId } from "@player/domain/player.aggregate";
+import { Character } from "@character/domain/character.aggregate";
+import { ClassId } from "@class/domain/class.aggregate";
+import { ICharacterRepository } from "@character/domain/repositories/character.repository";
+import { ProfessionProgression } from "@character/domain/value-objects/profession_progression.vo";
+import { ClassExistsByIdValidation } from "@character/application/validations/class_exists_by_id.validation";
+import { ProfessionsExistsByIdsValidation } from "@character/application/validations/professions_exists_by_ids.validation";
 
 interface CreateCharacterInput {
     player_id: PlayerId;// Vai buscar no middleawre e devolver o player_id

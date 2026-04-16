@@ -1,6 +1,6 @@
-import { Character } from "../../../character/domain/character.aggregate";
-import { Enemy } from "../../../enemy/domain/enemy.aggregate";
-import { Skill } from "../../../skill/domain/skill.entity";
+import { Character } from "@character/domain/character.aggregate";
+import { Enemy } from "@enemy/domain/enemy.aggregate";
+import { Skill } from "@skill/domain/skill.entity";
 
 export interface CalculateCharacterDamageCommand {
     character: Character;

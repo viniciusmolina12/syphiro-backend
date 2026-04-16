@@ -1,5 +1,5 @@
-import { Either } from "../../../@shared/either";
-import { ValueObject } from "../../../@shared/value-object";
+import { Either } from "@shared/either";
+import { ValueObject } from "@shared/value-object";
 
 export const STATS_RULES = {
     MIN_HEALTH: {

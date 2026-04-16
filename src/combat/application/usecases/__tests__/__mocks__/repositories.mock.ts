@@ -1,12 +1,12 @@
-import { Character, CharacterId } from "../../../../../character/domain/character.aggregate";
-import { ICharacterRepository } from "../../../../../character/domain/repositories/character.repository";
-import { ClassSkill, ClassSkillId } from "../../../../../class/domain/class_skill";
-import { IClassSkillRepository } from "../../../../../class/domain/repositories/class-skill.repository";
-import { Enemy, EnemyId } from "../../../../../enemy/domain/enemy.aggregate";
-import { IEnemyRepository } from "../../../../../enemy/domain/repositories/enemy.repository";
-import { InstanceId } from "../../../../../instance/domain/instance.aggregate";
-import { Combat, CombatId } from "../../../../domain/combat.aggregate";
-import { ICombatRepository } from "../../../../domain/repositories/combat.repository";
+import { Character, CharacterId } from "@character/domain/character.aggregate";
+import { ICharacterRepository } from "@character/domain/repositories/character.repository";
+import { ClassSkill, ClassSkillId } from "@class/domain/class_skill";
+import { IClassSkillRepository } from "@class/domain/repositories/class-skill.repository";
+import { Enemy, EnemyId } from "@enemy/domain/enemy.aggregate";
+import { IEnemyRepository } from "@enemy/domain/repositories/enemy.repository";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { Combat, CombatId } from "@combat/domain/combat.aggregate";
+import { ICombatRepository } from "@combat/domain/repositories/combat.repository";
 
 export class InMemoryCombatRepository implements ICombatRepository {
     private combats: Combat[] = [];

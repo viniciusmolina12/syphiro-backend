@@ -1,14 +1,14 @@
-import { Either } from "../../../@shared/either";
-import { CharactersExistsByIdsValidation } from "../../../character/application/validations/characters_exists_by_ids.validation";
-import { CharacterId } from "../../../character/domain/character.aggregate";
-import { CharacterNotFoundError } from "../../../character/domain/errors/character-not-found.error";
-import { EnemiesExistsByIdsValidation } from "../../../enemy/application/validations/enemy-exists-by-ids.validation";
-import { EnemyId } from "../../../enemy/domain/enemy.aggregate";
-import { EnemyNotFoundError } from "../../../enemy/domain/errors/enemy-not-found.error";
-import { InstanceId } from "../../../instance/domain/instance.aggregate";
-import { Combat } from "../../domain/combat.aggregate";
-import { Combatant } from "../../domain/entities/combatant.entity";
-import { ICombatRepository } from "../../domain/repositories/combat.repository";
+import { Either } from "@shared/either";
+import { CharactersExistsByIdsValidation } from "@character/application/validations/characters_exists_by_ids.validation";
+import { CharacterId } from "@character/domain/character.aggregate";
+import { CharacterNotFoundError } from "@character/domain/errors/character-not-found.error";
+import { EnemiesExistsByIdsValidation } from "@enemy/application/validations/enemy-exists-by-ids.validation";
+import { EnemyId } from "@enemy/domain/enemy.aggregate";
+import { EnemyNotFoundError } from "@enemy/domain/errors/enemy-not-found.error";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { Combat } from "@combat/domain/combat.aggregate";
+import { Combatant } from "@combat/domain/entities/combatant.entity";
+import { ICombatRepository } from "@combat/domain/repositories/combat.repository";
 
 interface CreateCombatUsecaseInput {
     combatants_characters_ids: string[];

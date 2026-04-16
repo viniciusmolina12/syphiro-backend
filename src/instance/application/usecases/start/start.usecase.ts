@@ -1,9 +1,9 @@
-import { Either } from '../../../../@shared/either';
-import { PlayerId } from '../../../../player/domain/player.aggregate';
-import { InstanceNotFoundError, InstanceNotPendingError, InsufficientPlayersError, NotInstanceCreatorError } from '../../../domain/errors';
-import { Instance, InstanceId } from '../../../domain/instance.aggregate';
-import { IInstanceRepository } from '../../../domain/repositories/instance.repository';
-import { InstanceExistsByIdValidation } from '../../validations/instance_exists_by_id.validation';
+import { Either } from '@shared/either';
+import { PlayerId } from '@player/domain/player.aggregate';
+import { InstanceNotFoundError, InstanceNotPendingError, InsufficientPlayersError, NotInstanceCreatorError } from '@instance/domain/errors';
+import { Instance, InstanceId } from '@instance/domain/instance.aggregate';
+import { IInstanceRepository } from '@instance/domain/repositories/instance.repository';
+import { InstanceExistsByIdValidation } from '@instance/application/validations/instance_exists_by_id.validation';
 
 interface StartInstanceInput {
     player_id: PlayerId;

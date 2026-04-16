@@ -1,4 +1,4 @@
-import { Combatant, CombatantId } from "../entities/combatant.entity";
+import { Combatant, CombatantId } from "@combat/domain/entities/combatant.entity";
 
 export interface CombatantRepository {
     findById(id: CombatantId): Promise<Combatant | null>;

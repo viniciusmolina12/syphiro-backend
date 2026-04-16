@@ -1,5 +1,5 @@
-import { IDomainEvent } from './domain-event.interface';
-import { Entity } from './entity';
+import { IDomainEvent } from '@shared/domain/domain-event.interface';
+import { Entity } from '@shared/domain/entity';
 
 export abstract class AggregateRoot extends Entity {
     private _domainEvents: IDomainEvent[] = [];

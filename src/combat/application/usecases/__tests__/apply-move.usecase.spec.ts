@@ -1,22 +1,22 @@
-    import { Character, CHARACTER_RULES, CharacterId } from "../../../../character/domain/character.aggregate";
-import { Class } from "../../../../class/domain/class.aggregate";
-import { ClassSkill, SkillType } from "../../../../class/domain/class_skill";
-import { Enemy, EnemyId } from "../../../../enemy/domain/enemy.aggregate";
-import { EnemyStats } from "../../../../enemy/domain/value-objects/enemy-stats.vo";
-import { InstanceId } from "../../../../instance/domain/instance.aggregate";
-import { PlayerId } from "../../../../player/domain/player.aggregate";
-import { Skill } from "../../../../skill/domain/skill.entity";
-import { Combat, CombatId, CombatStatus } from "../../../domain/combat.aggregate";
-import { CombatantNotFoundError, CombatNotFoundError, NotCombatantTurnError, SkillNotFoundError, SkillNotOwnedError } from "../../../domain/errors";
-import { Combatant } from "../../../domain/entities/combatant.entity";
-import { CalculateCharacterDamageService } from "../../../domain/services/calculate-character-damage.service";
-import { ApplyMoveUsecase } from "../apply-move.usecase";
+    import { Character, CHARACTER_RULES, CharacterId } from "@character/domain/character.aggregate";
+import { Class } from "@class/domain/class.aggregate";
+import { ClassSkill, SkillType } from "@class/domain/class_skill";
+import { Enemy, EnemyId } from "@enemy/domain/enemy.aggregate";
+import { EnemyStats } from "@enemy/domain/value-objects/enemy-stats.vo";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { PlayerId } from "@player/domain/player.aggregate";
+import { Skill } from "@skill/domain/skill.entity";
+import { Combat, CombatId, CombatStatus } from "@combat/domain/combat.aggregate";
+import { CombatantNotFoundError, CombatNotFoundError, NotCombatantTurnError, SkillNotFoundError, SkillNotOwnedError } from "@combat/domain/errors";
+import { Combatant } from "@combat/domain/entities/combatant.entity";
+import { CalculateCharacterDamageService } from "@combat/domain/services/calculate-character-damage.service";
+import { ApplyMoveUsecase } from "@combat/application/usecases/apply-move.usecase";
 import {
     InMemoryCharacterRepository,
     InMemoryClassSkillRepository,
     InMemoryCombatRepository,
     InMemoryEnemyRepository,
-} from "./__mocks__/repositories.mock";
+} from "@combat/application/usecases/__tests__/__mocks__/repositories.mock";
 
 // ─── Factories ───────────────────────────────────────────────────────────────
 

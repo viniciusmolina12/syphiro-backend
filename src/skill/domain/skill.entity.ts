@@ -1,4 +1,4 @@
-import { EntityId } from "../../@shared/entity-id.vo";
+import { EntityId } from "@shared/entity-id.vo";
 
 export class SkillId extends EntityId {}
 

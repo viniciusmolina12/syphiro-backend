@@ -1,5 +1,5 @@
-import { InvalidProgressionError, PROGRESSION_RULES } from "../../../../@shared/domain/progression.vo";
-import { ProfessionProgression } from "../profession_progression.vo";
+import { InvalidProgressionError, PROGRESSION_RULES } from "@shared/domain/progression.vo";
+import { ProfessionProgression } from "@character/domain/value-objects/profession_progression.vo";
 
 describe('ProfessionProgression Value Object', () => {
     it('should be able to create a profession progression', () => {

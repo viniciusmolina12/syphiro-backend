@@ -1,14 +1,14 @@
-import { EntityId } from "../../@shared/entity-id.vo";
-import { InstanceId } from "../../instance/domain/instance.aggregate";
-import { Class } from "../../class/domain/class.aggregate";
-import { Inventory } from "./entities/inventory";
-import { CharacterProgression } from "./value-objects/character_progression.vo";
-import { ProfessionProgression } from "./value-objects/profession_progression.vo";
-import { Either } from "../../@shared/either";
-import { PlayerId } from "../../player/domain/player.aggregate";
-import { AggregateRoot } from "../../@shared/domain/aggregate-root";
-import { SkillId } from "../../skill/domain/skill.entity";
-import { Stats } from "./value-objects/stats.vo";
+import { EntityId } from "@shared/entity-id.vo";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { Class } from "@class/domain/class.aggregate";
+import { Inventory } from "@character/domain/entities/inventory";
+import { CharacterProgression } from "@character/domain/value-objects/character_progression.vo";
+import { ProfessionProgression } from "@character/domain/value-objects/profession_progression.vo";
+import { Either } from "@shared/either";
+import { PlayerId } from "@player/domain/player.aggregate";
+import { AggregateRoot } from "@shared/domain/aggregate-root";
+import { SkillId } from "@skill/domain/skill.entity";
+import { Stats } from "@character/domain/value-objects/stats.vo";
 
 export class CharacterId extends EntityId {}
 

@@ -1,6 +1,6 @@
-import { EntityId } from "../../../@shared/entity-id.vo";
-import { CharacterId } from "../../../character/domain/character.aggregate";
-import { EnemyId } from "../../../enemy/domain/enemy.aggregate";
+import { EntityId } from "@shared/entity-id.vo";
+import { CharacterId } from "@character/domain/character.aggregate";
+import { EnemyId } from "@enemy/domain/enemy.aggregate";
 
 export enum CombatantType  {
     PLAYER,

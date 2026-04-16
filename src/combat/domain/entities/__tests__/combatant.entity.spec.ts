@@ -1,6 +1,6 @@
-import { CharacterId } from "../../../../character/domain/character.aggregate";
-import { EnemyId } from "../../../../enemy/domain/enemy.aggregate";
-import { Combatant, CombatantId } from "../combatant.entity";
+import { CharacterId } from "@character/domain/character.aggregate";
+import { EnemyId } from "@enemy/domain/enemy.aggregate";
+import { Combatant, CombatantId } from "@combat/domain/entities/combatant.entity";
 
 describe('Combatant Entity', () => {
     it('should be able to create a player combatant', () => {

@@ -1,5 +1,5 @@
-import { CombatantId } from "../combatant.entity";
-import { InvalidTurnError, Turn } from "../turn.entity";
+import { CombatantId } from "@combat/domain/entities/combatant.entity";
+import { InvalidTurnError, Turn } from "@combat/domain/entities/turn.entity";
 
 describe('Turn Entity', () => {
     it('should be able to create a turn', () => {

@@ -1,4 +1,4 @@
-import { ValueObject } from "../../../@shared/value-object";
+import { ValueObject } from "@shared/value-object";
 
 export class EnemyStats extends ValueObject {
     public constructor(

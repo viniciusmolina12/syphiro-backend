@@ -1,9 +1,9 @@
-import { CharacterId } from "../../character/domain/character.aggregate";
-import { EnemyId } from "../../enemy/domain/enemy.aggregate";
-import { InstanceId } from "../../instance/domain/instance.aggregate";
-import { Combat, CombatStatus } from "./combat.aggregate";
-import { CombatantsEmptyError, NotCombatantTurnError } from "./errors";
-import { Combatant } from "./entities/combatant.entity";
+import { CharacterId } from "@character/domain/character.aggregate";
+import { EnemyId } from "@enemy/domain/enemy.aggregate";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { Combat, CombatStatus } from "@combat/domain/combat.aggregate";
+import { CombatantsEmptyError, NotCombatantTurnError } from "@combat/domain/errors";
+import { Combatant } from "@combat/domain/entities/combatant.entity";
 
 const makeCombatants = () => {
     const player_combatant = Combatant.createPlayer(new CharacterId());

@@ -1,9 +1,9 @@
-import { PlayerId } from '../../../../player/domain/player.aggregate';
-import { Instance, INSTANCE_RULES, InstanceDifficulty, InstanceId, InstanceStatus } from '../../../domain/instance.aggregate';
-import { IInstanceRepository } from '../../../domain/repositories/instance.repository';
-import { InstanceFullError, InstanceNotFoundError, InstanceNotPendingError, PlayerAlreadyInInstanceError } from '../../../domain/errors';
-import { JoinInstanceUsecase } from './join.usecase';
-import { InstanceExistsByIdValidation } from '../../validations/instance_exists_by_id.validation';
+import { PlayerId } from '@player/domain/player.aggregate';
+import { Instance, INSTANCE_RULES, InstanceDifficulty, InstanceId, InstanceStatus } from '@instance/domain/instance.aggregate';
+import { IInstanceRepository } from '@instance/domain/repositories/instance.repository';
+import { InstanceFullError, InstanceNotFoundError, InstanceNotPendingError, PlayerAlreadyInInstanceError } from '@instance/domain/errors';
+import { JoinInstanceUsecase } from '@instance/application/usecases/join/join.usecase';
+import { InstanceExistsByIdValidation } from '@instance/application/validations/instance_exists_by_id.validation';
 
 class InMemoryInstanceRepository implements IInstanceRepository {
     public instances: Instance[] = [];

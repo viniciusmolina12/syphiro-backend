@@ -1,5 +1,5 @@
-import { EnemyId } from "../../../enemy/domain/enemy.aggregate";
-import { Combat, CombatId } from "../combat.aggregate";
+import { EnemyId } from "@enemy/domain/enemy.aggregate";
+import { Combat, CombatId } from "@combat/domain/combat.aggregate";
 
 export interface ICombatRepository {
     findById(id: CombatId): Promise<Combat | null>;

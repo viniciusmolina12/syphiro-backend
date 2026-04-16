@@ -1,5 +1,5 @@
-import { EntityId } from "../../@shared/entity-id.vo";
-import { Either } from "../../@shared/either";
+import { EntityId } from "@shared/entity-id.vo";
+import { Either } from "@shared/either";
 
 export class ProfessionId extends EntityId {}
 

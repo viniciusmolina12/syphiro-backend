@@ -1,5 +1,5 @@
-import { EnemyId } from "../../domain/enemy.aggregate";
-import { IEnemyRepository } from "../../domain/repositories/enemy.repository";
+import { EnemyId } from "@enemy/domain/enemy.aggregate";
+import { IEnemyRepository } from "@enemy/domain/repositories/enemy.repository";
 
 export class EnemiesExistsByIdsValidation {
     constructor(private readonly enemyRepository: IEnemyRepository) {}

@@ -1,5 +1,5 @@
-import { Either } from "../either";
-import { ValueObject } from "../value-object"
+import { Either } from "@shared/either";
+import { ValueObject } from "@shared/value-object"
 
 export const PROGRESSION_RULES = {
     MIN_EXPERIENCE: {

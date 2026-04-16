@@ -1,17 +1,17 @@
-import { Either } from "../../../../@shared/either";
-import { InstanceExistsByIdValidation } from "../../../../instance/application/validations/instance_exists_by_id.validation";
-import { Instance, InstanceId } from "../../../../instance/domain/instance.aggregate";
-import { IInstanceRepository } from "../../../../instance/domain/repositories/instance.repository";
-import { PlayerId } from "../../../../player/domain/player.aggregate";
-import { Character, CharacterId } from "../../../domain/character.aggregate";
-import { Class, ClassId } from "../../../../class/domain/class.aggregate";
-import { ICharacterRepository } from "../../../domain/repositories/character.repository";
-import { IClassRepository } from "../../../domain/repositories/class.repository";
-import { ClassExistsByIdValidation } from "../../validations/class_exists_by_id.validation";
-import { CreateCharacterUsecase } from "./create.usecase";
-import { ProfessionsExistsByIdsValidation } from "../../validations/professions_exists_by_ids.validation";
-import { Profession, ProfessionId } from "../../../../profession/domain/profession.aggregate";
-import { IProfessionRepository } from "../../../domain/repositories/profession.repository";
+import { Either } from "@shared/either";
+import { InstanceExistsByIdValidation } from "@instance/application/validations/instance_exists_by_id.validation";
+import { Instance, InstanceId } from "@instance/domain/instance.aggregate";
+import { IInstanceRepository } from "@instance/domain/repositories/instance.repository";
+import { PlayerId } from "@player/domain/player.aggregate";
+import { Character, CharacterId } from "@character/domain/character.aggregate";
+import { Class, ClassId } from "@class/domain/class.aggregate";
+import { ICharacterRepository } from "@character/domain/repositories/character.repository";
+import { IClassRepository } from "@character/domain/repositories/class.repository";
+import { ClassExistsByIdValidation } from "@character/application/validations/class_exists_by_id.validation";
+import { CreateCharacterUsecase } from "@character/application/usecases/create/create.usecase";
+import { ProfessionsExistsByIdsValidation } from "@character/application/validations/professions_exists_by_ids.validation";
+import { Profession, ProfessionId } from "@profession/domain/profession.aggregate";
+import { IProfessionRepository } from "@character/domain/repositories/profession.repository";
 
 
 class CharacterRepositoryStub implements ICharacterRepository {

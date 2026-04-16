@@ -1,4 +1,4 @@
-import { IDomainEvent } from '../domain/domain-event.interface';
+import { IDomainEvent } from '@shared/domain/domain-event.interface';
 
 export interface IEventBus {
     publish(event: IDomainEvent): Promise<void>;

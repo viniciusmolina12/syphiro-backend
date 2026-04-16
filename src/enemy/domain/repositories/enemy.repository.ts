@@ -1,4 +1,4 @@
-import { Enemy, EnemyId } from "../enemy.aggregate";
+import { Enemy, EnemyId } from "@enemy/domain/enemy.aggregate";
 
 export interface IEnemyRepository {
     findById(id: EnemyId): Promise<Enemy | null>;

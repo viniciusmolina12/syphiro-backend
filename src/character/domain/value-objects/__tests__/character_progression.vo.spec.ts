@@ -1,5 +1,5 @@
-import { InvalidProgressionError, PROGRESSION_RULES } from "../../../../@shared/domain/progression.vo";
-import { CharacterProgression } from "../character_progression.vo";
+import { InvalidProgressionError, PROGRESSION_RULES } from "@shared/domain/progression.vo";
+import { CharacterProgression } from "@character/domain/value-objects/character_progression.vo";
 
 describe('CharacterProgression Value Object', () => {
     it('should be able to create a character progression', () => {

@@ -1,6 +1,6 @@
-import { InstanceId } from "../../../instance/domain/instance.aggregate";
-import { CharacterId } from "../../domain/character.aggregate";
-import { ICharacterRepository } from "../../domain/repositories/character.repository";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { CharacterId } from "@character/domain/character.aggregate";
+import { ICharacterRepository } from "@character/domain/repositories/character.repository";
 
 export class CharactersExistsByIdsValidation {
     constructor(

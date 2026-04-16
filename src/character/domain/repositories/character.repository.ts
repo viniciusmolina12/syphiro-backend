@@ -1,5 +1,5 @@
-import { InstanceId } from "../../../instance/domain/instance.aggregate";
-import { Character, CharacterId } from "../character.aggregate";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { Character, CharacterId } from "@character/domain/character.aggregate";
 
 export interface ICharacterRepository {
     findById(id: CharacterId): Promise<Character | null>;

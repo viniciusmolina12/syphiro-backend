@@ -1,8 +1,8 @@
-import { InstanceId } from "../../../../instance/domain/instance.aggregate";
-import { PlayerId } from "../../../../player/domain/player.aggregate";
-import { Character } from "../../../domain/character.aggregate";
-import { Class, ClassId } from "../../../../class/domain/class.aggregate";
-import { CharacterInMemoryDatabase } from "./character-in-memory.database";
+import { InstanceId } from "@instance/domain/instance.aggregate";
+import { PlayerId } from "@player/domain/player.aggregate";
+import { Character } from "@character/domain/character.aggregate";
+import { Class, ClassId } from "@class/domain/class.aggregate";
+import { CharacterInMemoryDatabase } from "@character/infrastructure/database/in-memory/character-in-memory.database";
 
 const makeCharacter = () => {
     return Character.create({instance_id: new InstanceId('1'), class: new Class({id: new ClassId('1'), name: 'Mago', description: 'Mago', icon: 'mago.png', skills: []}), player_id: new PlayerId('1'), professions: []}).ok;

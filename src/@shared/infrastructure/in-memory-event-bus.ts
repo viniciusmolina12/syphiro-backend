@@ -1,7 +1,7 @@
 import { EventEmitter } from 'node:events';
-import { IEventBus } from '../application/event-bus.interface';
-import { IEventHandler } from '../application/event-handler.interface';
-import { IDomainEvent } from '../domain/domain-event.interface';
+import { IEventBus } from '@shared/application/event-bus.interface';
+import { IEventHandler } from '@shared/application/event-handler.interface';
+import { IDomainEvent } from '@shared/domain/domain-event.interface';
 
 export class InMemoryEventBus implements IEventBus {
     private readonly emitter = new EventEmitter();
