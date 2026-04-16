@@ -1,5 +1,1 @@
-import { ClassSkill, ClassSkillId } from "../class_skill";
-
-export interface IClassSkillRepository {
-    findById(id: ClassSkillId): Promise<ClassSkill | null>;
-}
+export { ISkillRepository as IClassSkillRepository } from "../../../skill/domain/repositories/skill.repository";
