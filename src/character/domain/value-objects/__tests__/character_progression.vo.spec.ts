@@ -4,8 +4,6 @@ import { CharacterProgression } from "../character_progression.vo";
 describe('CharacterProgression Value Object', () => {
     it('should be able to create a character progression', () => {
         const [characterProgression, error] = CharacterProgression.create<CharacterProgression>(6401).asArray();
-        console.log(characterProgression.level);
-        console.log(characterProgression.experience_to_next_level);
         expect(error).toBeNull();
     });
 
