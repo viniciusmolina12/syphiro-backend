@@ -2,7 +2,8 @@ import { CharacterId } from "../../character/domain/character.aggregate";
 import { EnemyId } from "../../enemy/domain/enemy.aggregate";
 import { InstanceId } from "../../instance/domain/instance.aggregate";
 import { Combat, CombatStatus } from "./combat.aggregate";
-import { CombatantsEmptyError, NotCombatantTurnError } from "./combat.errors";
+import { CombatantsEmptyError } from "./errors/combatants-empty.error";
+import { NotCombatantTurnError } from "./errors/not-combatant-turn.error";
 import { Combatant } from "./entities/combatant.entity";
 
 const makeCombatants = () => {
