@@ -16,7 +16,12 @@ class InMemoryInstanceRepository implements IInstanceRepository {
     }
 
     async findActiveByPlayerId(player_id: PlayerId): Promise<Instance | null> {
-        return this.instances.find(i => i.player_id.equals(player_id) && i.isActive()) ?? null;
+        return this.instances.find(i => i.participants.some(p => p.equals(player_id)) && i.isActive()) ?? null;
+    }
+
+    async update(instance: Instance): Promise<void> {
+        const index = this.instances.findIndex(i => i.id.equals(instance.id));
+        if (index !== -1) this.instances[index] = instance;
     }
 
     async save(instance: Instance): Promise<void> {
@@ -43,12 +48,12 @@ const makeInput = (overrides: Partial<{ player_id: PlayerId; difficulty: Instanc
 
 describe('CreateInstanceUsecase', () => {
     describe('sucesso', () => {
-        it('deve criar uma instância com status ACTIVE', async () => {
+        it('deve criar uma instância com status PENDING', async () => {
             const { usecase } = makeSut();
             const [instance, error] = (await usecase.execute(makeInput())).asArray();
 
             expect(error).toBeNull();
-            expect(instance.status).toBe(InstanceStatus.ACTIVE);
+            expect(instance.status).toBe(InstanceStatus.PENDING);
         });
 
         it('deve criar uma instância começando no andar 1', async () => {
