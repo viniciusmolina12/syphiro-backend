@@ -30,7 +30,7 @@ describe('Combat Aggregate', () => {
         const [combat, _] = Combat.create({ combatants: [player_combatant, enemy_combatant], instance_id: new InstanceId() }).asArray();
         combat.act(player_combatant.id, enemy_combatant.id);
         expect(combat.status).toBe(CombatStatus.ACTIVE);
-        expect(combat.getCurrentTurn().current_combatant.equals(enemy_combatant.id)).toBe(true);
+        expect(combat.turns[0].current_combatant.equals(enemy_combatant.id)).toBe(true);
     });
 
     it('should not be able to act in a combat if the combatant is not the current combatant', () => {
@@ -51,11 +51,11 @@ describe('Combat Aggregate', () => {
    it('should be able to go to the next turn', () => {
     const { player_combatant, enemy_combatant } = makeCombatants();
     const [combat, _] = Combat.create({ combatants: [player_combatant, enemy_combatant], instance_id: new InstanceId() }).asArray();
-    expect(combat.getCurrentTurn().round).toBe(1);
+    expect(combat.turns[0].round).toBe(1);
     combat.act(player_combatant.id, enemy_combatant.id);
     combat.act(enemy_combatant.id, player_combatant.id);
-    expect(combat.getCurrentTurn().round).toBe(2);
-    expect(combat.getCurrentTurn().moves.length).toBe(0);
+    expect(combat.turns[1].round).toBe(2);
+    expect(combat.turns[1].moves.length).toBe(0);
    });
 
    it('should return an error if combatans is empty', () => {

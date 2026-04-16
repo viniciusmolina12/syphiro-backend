@@ -15,13 +15,13 @@ describe('Combatant Entity', () => {
 
     it('should be able to check if a combatant is a player', () => {
         const combatant = Combatant.createPlayer(new CharacterId());
-        expect(combatant.isPlayer()).toBe(true);
+        expect(combatant.isCharacter()).toBe(true);
         expect(combatant.isEnemy()).toBe(false);
     });
 
     it('should be able to check if a combatant is a enemy', () => {
         const combatant = Combatant.createEnemy(new EnemyId());
         expect(combatant.isEnemy()).toBe(true);
-        expect(combatant.isPlayer()).toBe(false);
+        expect(combatant.isCharacter()).toBe(false);
     });
 });

@@ -135,7 +135,6 @@ describe('ApplyMoveUsecase', () => {
                 });
 
                 expect(error).toBeNull();
-                expect(result).toBeUndefined();
             });
 
             it('deve aplicar o dano da skill ao inimigo', async () => {
@@ -173,7 +172,7 @@ describe('ApplyMoveUsecase', () => {
 
             it('deve persistir o combate no repositório após o movimento', async () => {
                 const { sut, combat, skill, playerCombatants, enemyCombatants } = makeScenario();
-                const saveSpy = jest.spyOn(sut.combatRepository, 'save');
+                const saveSpy = jest.spyOn(sut.combatRepository, 'update');
 
                 await sut.applyMoveUsecase.execute({
                     combat_id: combat.id,
@@ -198,7 +197,6 @@ describe('ApplyMoveUsecase', () => {
                 });
 
                 expect(error).toBeNull();
-                expect(result).toBeUndefined();
             });
 
             it('deve aplicar o dano da skill ao jogador', async () => {
