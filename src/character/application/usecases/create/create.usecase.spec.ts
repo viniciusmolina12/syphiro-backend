@@ -3,16 +3,31 @@ import { InstanceExistsByIdValidation } from "../../../../instance/application/v
 import { Instance, InstanceId } from "../../../../instance/domain/instance.aggregate";
 import { IInstanceRepository } from "../../../../instance/domain/repositories/instance.repository";
 import { PlayerId } from "../../../../player/domain/player.aggregate";
-import { Character } from "../../../domain/character.aggregate";
+import { Character, CharacterId } from "../../../domain/character.aggregate";
 import { Class, ClassId } from "../../../../class/domain/class.aggregate";
 import { ICharacterRepository } from "../../../domain/repositories/character.repository";
 import { IClassRepository } from "../../../domain/repositories/class.repository";
 import { ClassExistsByIdValidation } from "../../validations/class_exists_by_id.validation";
 import { CreateCharacterUsecase } from "./create.usecase";
+import { ProfessionsExistsByIdsValidation } from "../../validations/professions_exists_by_ids.validation";
+import { Profession, ProfessionId } from "../../../../profession/domain/profession.aggregate";
+import { IProfessionRepository } from "../../../domain/repositories/profession.repository";
 
 
 class CharacterRepositoryStub implements ICharacterRepository {
+    async update(_: Character): Promise<void> {
+        return;
+    }
     async create(_: Character): Promise<void> {
+        return;
+    }
+    async findById(_: CharacterId): Promise<Character> {
+        return Character.create({instance_id: new InstanceId('1'), class: new Class({id: new ClassId('1'), name: 'Mago', description: 'Mago', icon: 'mago.png', skills: []}), player_id: new PlayerId('1'), professions: []}).ok;
+    }
+    async existsByIds(_: CharacterId[]): Promise<boolean> {
+        return true;
+    }
+    async save(_: Character): Promise<void> {
         return;
     }
 }
@@ -29,7 +44,11 @@ class InstanceRepositoryStub implements IInstanceRepository {
         return true;
     }
 }
-
+class ProfessionRepositoryStub implements IProfessionRepository {
+    async findByIds(_: ProfessionId[]): Promise<Profession[]> {
+        return [Profession.create({id: new ProfessionId('1'), name: 'Mago'}).ok, Profession.create({id: new ProfessionId('2'), name: 'Arqueiro'}).ok];
+    }
+}
 interface SutType {
     createCharacterUsecase: CreateCharacterUsecase;
     characterRepository: ICharacterRepository;
@@ -45,13 +64,24 @@ const makeSut = (): SutType => {
     const instanceExistsByIdValidation = new InstanceExistsByIdValidation(instanceRepository);
     const classRepository = new ClassRepositoryStub();
     const classExistsByIdValidation = new ClassExistsByIdValidation(classRepository);
-    const createCharacterUsecase = new CreateCharacterUsecase(characterRepository, instanceExistsByIdValidation, classExistsByIdValidation);
+    const professionRepository = new ProfessionRepositoryStub();
+    const professionsExistsByIdsValidation = new ProfessionsExistsByIdsValidation(professionRepository);
+    const createCharacterUsecase = new CreateCharacterUsecase(characterRepository, instanceExistsByIdValidation, classExistsByIdValidation, professionsExistsByIdsValidation);
     return { createCharacterUsecase, characterRepository, instanceRepository, classRepository, instanceExistsByIdValidation, classExistsByIdValidation };
+}
+
+const makeInput = () => {
+    return {
+        player_id: new PlayerId(),
+        instance_id: '1' as string,
+        class_id: '1' as string,
+        professions: ['1' as string, '2' as string]
+    }
 }
 describe('CreateCharacterUsecase', () => {
     it('should be able to create a character', async () => {
         const { createCharacterUsecase } = makeSut();
-        const character = await createCharacterUsecase.execute({player_id: new PlayerId(), instance_id: '1' as string, class_id: '1' as string});
+        const character = await createCharacterUsecase.execute(makeInput());
         expect(character).toBeDefined();
     });
 
@@ -59,7 +89,7 @@ describe('CreateCharacterUsecase', () => {
         const { createCharacterUsecase, instanceRepository } = makeSut();
         jest.spyOn(instanceRepository, 'existsById').mockReturnValue(Promise.resolve(false));
         expect(async () => {    
-            await createCharacterUsecase.execute({player_id: new PlayerId(), instance_id: '1' as string, class_id: '1' as string});
+            await createCharacterUsecase.execute(makeInput());
         }).rejects.toThrow(new Error('Instance not found')); 
     });
 
@@ -67,7 +97,7 @@ describe('CreateCharacterUsecase', () => {
         const { createCharacterUsecase, classRepository } = makeSut();
         jest.spyOn(classRepository, 'findById').mockReturnValue(Promise.resolve(null));
         expect(async () => {    
-            await createCharacterUsecase.execute({player_id: new PlayerId(), instance_id: '1' as string, class_id: '1' as string});
+            await createCharacterUsecase.execute(makeInput());
         }).rejects.toThrow(new Error('Class not found'));
     });
 });
