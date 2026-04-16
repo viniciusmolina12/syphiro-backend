@@ -9,3 +9,9 @@ dist
 .vscode
 .idea
 
+coverage
+CLAUDE.md
+syphiro.db
+combat_event.json
+combat-domain.md
+items-domain.md
