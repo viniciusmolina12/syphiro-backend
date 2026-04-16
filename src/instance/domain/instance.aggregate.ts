@@ -4,6 +4,7 @@ import { EntityId } from '../../@shared/entity-id.vo';
 import { PlayerId } from '../../player/domain/player.aggregate';
 import { InstanceFullError } from './errors/instance-full.error';
 import { InstanceNotPendingError } from './errors/instance-not-pending.error';
+import { InstanceNotRunningError } from './errors/instance-not-running.error';
 import { InsufficientPlayersError } from './errors/insufficient-players.error';
 
 export class InstanceId extends EntityId {}
@@ -18,6 +19,7 @@ export enum InstanceStatus {
     RUNNING = 'RUNNING',
     COMPLETED = 'COMPLETED',
     FAILED = 'FAILED',
+    ABANDONED = 'ABANDONED',
 }
 
 export enum InstanceDifficulty {
@@ -123,8 +125,16 @@ export class Instance extends AggregateRoot {
         this._current_floor++;
     }
 
-    complete(): void {
+    complete(): Either<void, InstanceNotRunningError> {
+        if (!this.isRunning()) return Either.fail(new InstanceNotRunningError());
         this._status = InstanceStatus.COMPLETED;
+        return Either.ok(void 0);
+    }
+
+    abandon(): Either<void, InstanceNotPendingError> {
+        if (!this.isPending()) return Either.fail(new InstanceNotPendingError());
+        this._status = InstanceStatus.ABANDONED;
+        return Either.ok(void 0);
     }
 
     fail(): void {
