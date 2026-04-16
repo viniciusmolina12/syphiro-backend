@@ -37,12 +37,17 @@ class ClassRepositoryStub implements IClassRepository {
     }
 }
 class InstanceRepositoryStub implements IInstanceRepository {
-    async findById(_: InstanceId): Promise<Instance> {
+    async findById(_: InstanceId): Promise<Instance | null> {
         return Instance.create();
     }
     async existsById(_: InstanceId): Promise<boolean> {
         return true;
     }
+    async findActiveByPlayerId(_: PlayerId): Promise<Instance | null> {
+        return null;
+    }
+    async save(_: Instance): Promise<void> {}
+    async update(_: Instance): Promise<void> {}
 }
 class ProfessionRepositoryStub implements IProfessionRepository {
     async findByIds(_: ProfessionId[]): Promise<Profession[]> {
@@ -90,7 +95,7 @@ describe('CreateCharacterUsecase', () => {
         jest.spyOn(instanceRepository, 'existsById').mockReturnValue(Promise.resolve(false));
         expect(async () => {    
             await createCharacterUsecase.execute(makeInput());
-        }).rejects.toThrow(new Error('Instance not found')); 
+        }).rejects.toThrow(new Error('Instância não encontrada'));
     });
 
     it('should not be able to create a character if the class does not exist', async () => {
