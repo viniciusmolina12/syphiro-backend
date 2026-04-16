@@ -1,9 +1,6 @@
 import { Either } from '../../../../@shared/either';
 import { PlayerId } from '../../../../player/domain/player.aggregate';
-import { InstanceNotFoundError } from '../../../domain/errors/instance-not-found.error';
-import { InstanceNotPendingError } from '../../../domain/errors/instance-not-pending.error';
-import { InsufficientPlayersError } from '../../../domain/errors/insufficient-players.error';
-import { NotInstanceCreatorError } from '../../../domain/errors/not-instance-creator.error';
+import { InstanceNotFoundError, InstanceNotPendingError, InsufficientPlayersError, NotInstanceCreatorError } from '../../../domain/errors';
 import { Instance, InstanceId } from '../../../domain/instance.aggregate';
 import { IInstanceRepository } from '../../../domain/repositories/instance.repository';
 import { InstanceExistsByIdValidation } from '../../validations/instance_exists_by_id.validation';

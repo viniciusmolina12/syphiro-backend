@@ -1,7 +1,7 @@
 import { PlayerId } from '../../../../player/domain/player.aggregate';
 import { Instance, InstanceDifficulty, InstanceId, InstanceStatus } from '../../../domain/instance.aggregate';
 import { IInstanceRepository } from '../../../domain/repositories/instance.repository';
-import { PlayerAlreadyHasActiveInstanceError } from '../../../domain/errors/player-already-has-active-instance.error';
+import { PlayerAlreadyHasActiveInstanceError } from '../../../domain/errors';
 import { CreateInstanceUsecase } from './create.usecase';
 
 class InMemoryInstanceRepository implements IInstanceRepository {

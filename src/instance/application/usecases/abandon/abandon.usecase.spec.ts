@@ -1,9 +1,7 @@
 import { PlayerId } from '../../../../player/domain/player.aggregate';
 import { INSTANCE_RULES, Instance, InstanceDifficulty, InstanceId, InstanceStatus } from '../../../domain/instance.aggregate';
 import { IInstanceRepository } from '../../../domain/repositories/instance.repository';
-import { InstanceNotFoundError } from '../../../domain/errors/instance-not-found.error';
-import { InstanceNotPendingError } from '../../../domain/errors/instance-not-pending.error';
-import { NotInstanceCreatorError } from '../../../domain/errors/not-instance-creator.error';
+import { InstanceNotFoundError, InstanceNotPendingError, NotInstanceCreatorError } from '../../../domain/errors';
 import { InstanceExistsByIdValidation } from '../../validations/instance_exists_by_id.validation';
 import { AbandonInstanceUsecase } from './abandon.usecase';
 

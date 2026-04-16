@@ -1,8 +1,7 @@
 import { AggregateRoot } from "../../@shared/domain/aggregate-root";
 import { Either } from "../../@shared/either";
 import { EntityId } from "../../@shared/entity-id.vo";
-import { CombatantsEmptyError } from "./errors/combatants-empty.error";
-import { NotCombatantTurnError } from "./errors/not-combatant-turn.error";
+import { CombatantsEmptyError, NotCombatantTurnError } from "./errors";
 import { Combatant, CombatantId, CombatantType } from "./entities/combatant.entity";
 import { Turn } from "./entities/turn.entity";
 import { InstanceId } from "../../instance/domain/instance.aggregate";

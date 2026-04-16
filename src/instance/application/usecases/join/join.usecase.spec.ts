@@ -1,11 +1,9 @@
 import { PlayerId } from '../../../../player/domain/player.aggregate';
 import { Instance, INSTANCE_RULES, InstanceDifficulty, InstanceId, InstanceStatus } from '../../../domain/instance.aggregate';
 import { IInstanceRepository } from '../../../domain/repositories/instance.repository';
-import { InstanceFullError } from '../../../domain/errors/instance-full.error';
-import { InstanceNotFoundError } from '../../../domain/errors/instance-not-found.error';
-import { InstanceNotPendingError } from '../../../domain/errors/instance-not-pending.error';
-import { PlayerAlreadyInInstanceError } from '../../../domain/errors/player-already-in-instance.error';
+import { InstanceFullError, InstanceNotFoundError, InstanceNotPendingError, PlayerAlreadyInInstanceError } from '../../../domain/errors';
 import { JoinInstanceUsecase } from './join.usecase';
+import { InstanceExistsByIdValidation } from '../../validations/instance_exists_by_id.validation';
 
 class InMemoryInstanceRepository implements IInstanceRepository {
     public instances: Instance[] = [];
@@ -43,7 +41,8 @@ interface Sut {
 
 const makeSut = (): Sut => {
     const instanceRepository = new InMemoryInstanceRepository();
-    const usecase = new JoinInstanceUsecase(instanceRepository);
+    const instanceExistsByIdValidation = new InstanceExistsByIdValidation(instanceRepository);
+    const usecase = new JoinInstanceUsecase(instanceRepository, instanceExistsByIdValidation);
     return { usecase, instanceRepository };
 };
 

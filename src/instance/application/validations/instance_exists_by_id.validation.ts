@@ -1,5 +1,5 @@
 import { Either } from "../../../@shared/either";
-import { InstanceNotFoundError } from "../../domain/errors/instance-not-found.error";
+import { InstanceNotFoundError } from "../../domain/errors";
 import { InstanceId } from "../../domain/instance.aggregate";
 import { IInstanceRepository } from "../../domain/repositories/instance.repository";
 

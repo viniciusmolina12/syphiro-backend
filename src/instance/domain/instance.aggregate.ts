@@ -2,10 +2,7 @@ import { AggregateRoot } from '../../@shared/domain/aggregate-root';
 import { Either } from '../../@shared/either';
 import { EntityId } from '../../@shared/entity-id.vo';
 import { PlayerId } from '../../player/domain/player.aggregate';
-import { InstanceFullError } from './errors/instance-full.error';
-import { InstanceNotPendingError } from './errors/instance-not-pending.error';
-import { InstanceNotRunningError } from './errors/instance-not-running.error';
-import { InsufficientPlayersError } from './errors/insufficient-players.error';
+import { InstanceFullError, InstanceNotPendingError, InstanceNotRunningError, InsufficientPlayersError } from './errors';
 
 export class InstanceId extends EntityId {}
 

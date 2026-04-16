@@ -1,7 +1,7 @@
 import { Either } from '../../../../@shared/either';
 import { PlayerId } from '../../../../player/domain/player.aggregate';
 import { Instance, CreateInstanceCommand } from '../../../domain/instance.aggregate';
-import { PlayerAlreadyHasActiveInstanceError } from '../../../domain/errors/player-already-has-active-instance.error';
+import { PlayerAlreadyHasActiveInstanceError } from '../../../domain/errors';
 import { IInstanceRepository } from '../../../domain/repositories/instance.repository';
 import { InstanceDifficulty } from '../../../domain/instance.aggregate';
 

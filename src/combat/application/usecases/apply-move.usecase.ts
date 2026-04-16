@@ -6,11 +6,7 @@ import { IEnemyRepository } from "../../../enemy/domain/repositories/enemy.repos
 import { SkillId } from "../../../skill/domain/skill.entity";
 import { ISkillRepository } from "../../../skill/domain/repositories/skill.repository";
 import { Combat, CombatId } from "../../domain/combat.aggregate";
-import { CombatantNotFoundError } from "../../domain/errors/combatant-not-found.error";
-import { CombatNotFoundError } from "../../domain/errors/combat-not-found.error";
-import { NotCombatantTurnError } from "../../domain/errors/not-combatant-turn.error";
-import { SkillNotFoundError } from "../../domain/errors/skill-not-found.error";
-import { SkillNotOwnedError } from "../../domain/errors/skill-not-owned.error";
+import { CombatantNotFoundError, CombatNotFoundError, NotCombatantTurnError, SkillNotFoundError, SkillNotOwnedError } from "../../domain/errors";
 import { Combatant, CombatantId } from "../../domain/entities/combatant.entity";
 import { ICombatRepository } from "../../domain/repositories/combat.repository";
 import { CalculateCharacterDamageService } from "../../domain/services/calculate-character-damage.service";
