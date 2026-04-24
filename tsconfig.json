@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "es2022",
+    "module": "commonjs",
     "rootDir": "src",
     "baseUrl": "src",
     "outDir": "dist",
@@ -12,6 +12,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "paths": {
       "@shared/*": ["./@shared/*"],
       "@character/*": ["./character/*"],
@@ -21,7 +23,8 @@
       "@instance/*": ["./instance/*"],
       "@player/*": ["./player/*"],
       "@profession/*": ["./profession/*"],
-      "@skill/*": ["./skill/*"]
+      "@skill/*": ["./skill/*"],
+      "@auth/*": ["./auth/*"]
     }
   },
   "include": ["src"],
