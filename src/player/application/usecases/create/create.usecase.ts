@@ -13,7 +13,7 @@ export class CreatePlayerUsecase {
     async execute(
         input: CreatePlayerCommand,
     ): Promise<Either<Player, CreatePlayerError>> {
-        const [identity_id, identity_id_error] = IdentityId.create(input.identityId).asArray();
+        const [identity_id, identity_id_error] = IdentityId.create(input.identity_id).asArray();
         if (identity_id_error) return Either.fail(identity_id_error);
 
         const player_already_exists = await this.playerRepository.existsByIdentityId(identity_id);

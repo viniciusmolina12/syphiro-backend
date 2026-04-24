@@ -55,5 +55,4 @@ PlayerModel.init(
     },
 );
 
-/** Aguardar em testes/bootstrap para evitar I/O e logs após o Jest terminar. */
 export const playerModelSynced = PlayerModel.sync();

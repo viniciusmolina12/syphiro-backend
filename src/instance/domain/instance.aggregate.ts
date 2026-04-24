@@ -60,6 +60,10 @@ export class Instance extends AggregateRoot {
         this._participants = props.participants;
     }
 
+    static rehydrate(props: InstanceConstructorProps): Instance {
+        return new Instance(props);
+    }
+
     static create(command?: CreateInstanceCommand): Instance {
         const player_id = command?.player_id ?? new PlayerId();
         return new Instance({

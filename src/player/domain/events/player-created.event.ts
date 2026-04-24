@@ -6,13 +6,13 @@ export class PlayerCreatedEvent implements IDomainEvent {
     public readonly eventName = 'PlayerCreated';
 
     public readonly playerId: PlayerId;
-    public readonly identityId: string;
+    public readonly identity_id: string;
     public readonly name: string;
 
-    constructor(payload: { playerId: PlayerId; identityId: string; name: string }) {
+    constructor(payload: { playerId: PlayerId; identity_id: string; name: string }) {
         this.occurredAt = new Date();
         this.playerId = payload.playerId;
-        this.identityId = payload.identityId;
+        this.identity_id = payload.identity_id;
         this.name = payload.name;
     }
 }

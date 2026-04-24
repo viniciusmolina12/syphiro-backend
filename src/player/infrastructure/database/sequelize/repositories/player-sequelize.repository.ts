@@ -22,7 +22,7 @@ export class PlayerSequelizeRepository implements IPlayerRepository {
         await PlayerModel.create({
             id: player.id.toString(),
             name: player.name.value,
-            identity_id: player.identityId.value,
+            identity_id: player.identity_id.value,
         });
     }
 }

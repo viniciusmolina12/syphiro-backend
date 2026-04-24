@@ -9,21 +9,23 @@ const VALID_IDENTITY_ID = 'cognito|abc-123-def-456';
 const VALID_NAME = 'Jon Snow';
 
 const makePlayer = (): Player =>
-    Player.create({ identityId: VALID_IDENTITY_ID, name: VALID_NAME }).ok;
+    Player.create({ identity_id: VALID_IDENTITY_ID, name: VALID_NAME }).ok;
 
 describe('PlayerSequelizeRepository', () => {
     let repository: PlayerSequelizeRepository;
 
-    beforeAll(async () => {
-        await playerModelSynced;
-    });
+    // beforeAll(async () => {
+    //     await playerModelSynced;
+    // });
 
     beforeEach(async () => {
         repository = new PlayerSequelizeRepository();
-        await PlayerModel.destroy({ where: {}, truncate: true });
+        // await PlayerModel.destroy({ where: {}, truncate: true });
+       
     });
 
     afterAll(async () => {
+        await SEQUELIZE_CONFIG.drop();
         await SEQUELIZE_CONFIG.close();
     });
 
@@ -33,7 +35,7 @@ describe('PlayerSequelizeRepository', () => {
 
             await repository.save(player);
 
-            const record = await PlayerModel.findOne({ where: { identity_id: VALID_IDENTITY_ID } });
+            const record = await PlayerModel.findOne({ where: { id: player.id.toString() } });
             expect(record).not.toBeNull();
             expect(record!.id).toBe(player.id.toString());
             expect(record!.name).toBe(VALID_NAME);
@@ -72,7 +74,7 @@ describe('PlayerSequelizeRepository', () => {
 
             expect(result).toBeInstanceOf(Player);
             expect(result!.id.toString()).toBe(VALID_ID);
-            expect(result!.identityId.value).toBe(VALID_IDENTITY_ID);
+            expect(result!.identity_id.value).toBe(VALID_IDENTITY_ID);
             expect(result!.name.value).toBe(VALID_NAME);
         });
     });
