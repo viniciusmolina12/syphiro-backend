@@ -2,11 +2,12 @@
 module.exports = {
     preset: 'ts-jest',
     testEnvironment: 'node',
+    globalSetup: './setup-tests.ts',
     roots: ['<rootDir>/src'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
     testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
     clearMocks: true,
-    setupFilesAfterEnv: ['<rootDir>/setup-tests.ts'],
+    maxWorkers: 1,
 
     coverageDirectory: 'coverage',
     moduleNameMapper: {
@@ -20,6 +21,7 @@ module.exports = {
         '^@profession/(.*)$': '<rootDir>/src/profession/$1',
         '^@skill/(.*)$': '<rootDir>/src/skill/$1',
         '^@auth/(.*)$': '<rootDir>/src/auth/$1',
+        '^@campaign/(.*)$': '<rootDir>/src/campaign/$1',
     },
 };
 
