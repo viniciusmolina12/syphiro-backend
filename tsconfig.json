@@ -24,7 +24,8 @@
       "@player/*": ["./player/*"],
       "@profession/*": ["./profession/*"],
       "@skill/*": ["./skill/*"],
-      "@auth/*": ["./auth/*"]
+      "@auth/*": ["./auth/*"],
+      "@campaign/*": ["./campaign/*"]
     }
   },
   "include": ["src"],
