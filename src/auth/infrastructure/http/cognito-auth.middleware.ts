@@ -10,7 +10,7 @@ const verifier = CognitoJwtVerifier.create({
 
 @Injectable()
 export class CognitoAuthMiddleware implements NestMiddleware {
-    async use(req: { headers: Record<string, string | string[] | undefined> }, _res: unknown, next: () => void): Promise<void> {
+    async use(req: any, _res: unknown, next: () => void): Promise<void> {
         const auth_header = req.headers['authorization'] as string | undefined;
         if (!auth_header?.startsWith('Bearer ')) {
             throw new UnauthorizedException('Missing authorization token');
@@ -18,9 +18,11 @@ export class CognitoAuthMiddleware implements NestMiddleware {
 
         const token = auth_header.slice(7);
         try {
-            await verifier.verify(token);
+            const result = await verifier.verify(token);
+            req['identity_id'] = result.sub;
             next();
-        } catch {
+        } catch(error) {
+            console.log(error)
             throw new UnauthorizedException('Invalid or expired token');
         }
     }

@@ -19,6 +19,7 @@ import {
 } from '@auth/domain/errors';
 
 const VALID_EMAIL = 'user@example.com';
+const VALID_NAME = "John Doe";
 const VALID_PASSWORD = 'SecurePass123';
 const VALID_CODE = '123456';
 const VALID_REFRESH_TOKEN = 'valid-refresh-token';
@@ -60,7 +61,7 @@ describe('AuthController', () => {
         it('deve retornar o identity_id após cadastro bem-sucedido', async () => {
             signUpUsecase.execute.mockResolvedValue(Either.ok({ identity_id: VALID_IDENTITY_ID }));
 
-            const result = await controller.signUp({ email: VALID_EMAIL, password: VALID_PASSWORD });
+            const result = await controller.signUp({ email: VALID_EMAIL, password: VALID_PASSWORD, name: VALID_NAME});
 
             expect(result).toEqual({ identity_id: VALID_IDENTITY_ID });
         });
@@ -69,7 +70,15 @@ describe('AuthController', () => {
             signUpUsecase.execute.mockResolvedValue(Either.fail(new InvalidEmailError()));
 
             await expect(
-                controller.signUp({ email: 'invalid', password: VALID_PASSWORD }),
+                controller.signUp({ email: 'invalid', password: VALID_PASSWORD, name: VALID_NAME }),
+            ).rejects.toBeInstanceOf(BadRequestException);
+        });
+
+        it('deve lançar BadRequestException para nome inválido', async () => {
+            signUpUsecase.execute.mockResolvedValue(Either.fail(new InvalidEmailError()));
+
+            await expect(
+                controller.signUp({ email: VALID_EMAIL, password: VALID_PASSWORD, name: '' }),
             ).rejects.toBeInstanceOf(BadRequestException);
         });
 
@@ -77,7 +86,7 @@ describe('AuthController', () => {
             signUpUsecase.execute.mockResolvedValue(Either.fail(new InvalidPasswordError('too short')));
 
             await expect(
-                controller.signUp({ email: VALID_EMAIL, password: '123' }),
+                controller.signUp({ email: VALID_EMAIL, password: '123', name: VALID_NAME }),
             ).rejects.toBeInstanceOf(BadRequestException);
         });
 
@@ -85,7 +94,7 @@ describe('AuthController', () => {
             signUpUsecase.execute.mockResolvedValue(Either.fail(new UserAlreadyExistsError()));
 
             await expect(
-                controller.signUp({ email: VALID_EMAIL, password: VALID_PASSWORD }),
+                controller.signUp({ email: VALID_EMAIL, password: VALID_PASSWORD, name: VALID_NAME }),
             ).rejects.toBeInstanceOf(ConflictException);
         });
     });

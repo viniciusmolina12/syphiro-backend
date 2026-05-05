@@ -22,6 +22,7 @@ jest.mock('@aws-sdk/client-cognito-identity-provider', () => ({
     },
 }));
 
+const VALID_NAME = "John Doe";
 const VALID_EMAIL = 'user@example.com';
 const VALID_PASSWORD = 'SecurePass123';
 const VALID_CODE = '123456';
@@ -49,7 +50,7 @@ describe('CognitoAuthProvider', () => {
         it('deve retornar o identity_id após cadastro bem-sucedido', async () => {
             mockSend.mockResolvedValue({ UserSub: VALID_SUB });
 
-            const result = await provider.signUp(VALID_EMAIL, VALID_PASSWORD);
+            const result = await provider.signUp(VALID_EMAIL, VALID_PASSWORD, VALID_NAME);
 
             expect(result.ok).toEqual({ identity_id: VALID_SUB });
         });
@@ -59,7 +60,7 @@ describe('CognitoAuthProvider', () => {
             error.name = 'UsernameExistsException';
             mockSend.mockRejectedValue(error);
 
-            const result = await provider.signUp(VALID_EMAIL, VALID_PASSWORD);
+            const result = await provider.signUp(VALID_EMAIL, VALID_PASSWORD, VALID_NAME);
 
             expect(result.error).toBeInstanceOf(UserAlreadyExistsError);
         });
@@ -67,7 +68,7 @@ describe('CognitoAuthProvider', () => {
         it('deve relançar erros desconhecidos', async () => {
             mockSend.mockRejectedValue(new Error('Unknown error'));
 
-            await expect(provider.signUp(VALID_EMAIL, VALID_PASSWORD)).rejects.toThrow('Unknown error');
+            await expect(provider.signUp(VALID_EMAIL, VALID_PASSWORD, VALID_NAME)).rejects.toThrow('Unknown error');
         });
     });
 
