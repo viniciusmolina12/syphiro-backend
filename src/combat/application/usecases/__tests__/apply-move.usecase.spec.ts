@@ -17,6 +17,7 @@ import {
     InMemoryCombatRepository,
     InMemoryEnemyRepository,
 } from "@combat/application/usecases/__tests__/__mocks__/repositories.mock";
+import { Name } from "@player/domain/value-objects/name.vo";
 
 // ─── Factories ───────────────────────────────────────────────────────────────
 
@@ -42,7 +43,7 @@ const makeCharacter = (classEntity: Class) =>
     }).ok;
 
 const makeEnemy = (health = 100, skills: Skill[] = []) =>
-    new Enemy({ stats: EnemyStats.create(health, health), skills: skills });
+    new Enemy({ stats: EnemyStats.create(health, health), skills: skills, icon: "icon.svg", name: Name.create("any_name").ok });
 
 // ─── SUT ─────────────────────────────────────────────────────────────────────
 
