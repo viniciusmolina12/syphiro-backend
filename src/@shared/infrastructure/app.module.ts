@@ -2,9 +2,10 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 import { AuthModule } from '@auth/infrastructure/http/auth.module';
 import { PlayerModule } from '@player/infrastructure/http/player.module';
 import { CognitoAuthMiddleware } from '@auth/infrastructure/http/cognito-auth.middleware';
+import { DefaultModule } from './http/default.module';
 
 @Module({
-    imports: [AuthModule, PlayerModule],
+    imports: [AuthModule, PlayerModule, DefaultModule],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer): void {
