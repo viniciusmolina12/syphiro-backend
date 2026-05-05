@@ -6,7 +6,7 @@ export interface InstanceAttributes {
     player_id: string;
     status: string;
     difficulty: string;
-    current_floor: number;
+    campaign_chapter_floor_id: string;
     started_at: Date;
     created_at: Date;
     updated_at: Date;
@@ -24,7 +24,7 @@ export class InstanceModel extends Model<InstanceAttributes, InstanceCreationAtt
     public player_id!: string;
     public status!: string;
     public difficulty!: string;
-    public current_floor!: number;
+    public campaign_chapter_floor_id!: string;
     public started_at!: Date;
     public created_at!: Date;
     public updated_at!: Date;
@@ -50,8 +50,8 @@ InstanceModel.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        current_floor: {
-            type: DataTypes.INTEGER,
+        campaign_chapter_floor_id: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
         started_at: {
@@ -72,6 +72,8 @@ InstanceModel.init(
     {
         sequelize: SEQUELIZE_CONFIG,
         modelName: "Instance",
+        tableName: 'instances',
+        timestamps: false,
     },
 );
 

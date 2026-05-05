@@ -4,23 +4,16 @@ import { InstanceStatus, InstanceDifficulty } from "@instance/domain/instance.ag
 
 const VALID_ID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
 const VALID_PLAYER_ID = 'b1c2d3e4-f5a6-7890-abcd-ef1234567891';
+const VALID_FLOOR_ID = 'c1d2e3f4-a5b6-7890-abcd-ef1234567892';
 
 describe('InstanceModel', () => {
-    beforeAll(async () => {
-        await instanceModelSynced;
-    });
-
-    afterAll(async () => {
-        await SEQUELIZE_CONFIG.close();
-    });
-
     it('deve criar um instance model com os atributos corretos', () => {
         const model = new InstanceModel({
             id: VALID_ID,
             player_id: VALID_PLAYER_ID,
             status: InstanceStatus.PENDING,
             difficulty: InstanceDifficulty.NORMAL,
-            current_floor: 1,
+            campaign_chapter_floor_id: VALID_FLOOR_ID,
             started_at: new Date('2024-01-01T00:00:00Z'),
         });
 
@@ -28,7 +21,7 @@ describe('InstanceModel', () => {
         expect(model.player_id).toBe(VALID_PLAYER_ID);
         expect(model.status).toBe(InstanceStatus.PENDING);
         expect(model.difficulty).toBe(InstanceDifficulty.NORMAL);
-        expect(model.current_floor).toBe(1);
+        expect(model.campaign_chapter_floor_id).toBe(VALID_FLOOR_ID);
         expect(model.started_at).toBeInstanceOf(Date);
         expect(model.created_at).toBeInstanceOf(Date);
         expect(model.updated_at).toBeInstanceOf(Date);

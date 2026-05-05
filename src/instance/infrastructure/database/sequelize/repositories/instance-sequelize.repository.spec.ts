@@ -5,14 +5,16 @@ import { InstanceSequelizeRepository } from "./instance-sequelize.repository";
 import { Instance, InstanceId, InstanceStatus, InstanceDifficulty } from "@instance/domain/instance.aggregate";
 import { PlayerId } from "@player/domain/player.aggregate";
 import { PlayerModel, playerModelSynced } from "@player/infrastructure/database/sequelize/models/player.model";
+import { CampaignChapterFloorId } from "@campaign/domain/entities/campaign-chapter-floor.entity";
 
 const VALID_ID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
 const VALID_PLAYER_ID = 'b1c2d3e4-f5a6-7890-abcd-ef1234567891';
 const OTHER_PLAYER_ID = 'c1d2e3f4-a5b6-7890-abcd-ef1234567892';
+const VALID_FLOOR_ID = 'd1e2f3a4-b5c6-7890-abcd-ef1234567893';
 const VALID_STARTED_AT = new Date('2024-01-01T00:00:00Z');
 
 const makeInstance = (): Instance =>
-    Instance.create({ player_id: new PlayerId(VALID_PLAYER_ID), difficulty: InstanceDifficulty.NORMAL });
+    Instance.create({ player_id: new PlayerId(VALID_PLAYER_ID), difficulty: InstanceDifficulty.NORMAL, campaign_chapter_floor_id: new CampaignChapterFloorId(VALID_FLOOR_ID) });
 
 const seedModel = async (overrides: Partial<{
     id: string;
@@ -24,14 +26,18 @@ const seedModel = async (overrides: Partial<{
     const player_id = overrides.player_id ?? VALID_PLAYER_ID;
     const participants = overrides.participants ?? [player_id];
     
+    try {
     await InstanceModel.create({
         id,
         player_id,
         status: overrides.status ?? InstanceStatus.PENDING,
         difficulty: InstanceDifficulty.NORMAL,
-        current_floor: 1,
+        campaign_chapter_floor_id: VALID_FLOOR_ID,
         started_at: VALID_STARTED_AT,
     });
+}catch(e) {
+    console.log(`ERRO AQUI NESSA PORRA`, e)
+}
 
     await InstanceParticipantsModel.bulkCreate(
         participants.map(pid => ({ instance_id: id, player_id: pid })),
@@ -49,23 +55,15 @@ const seedPlayer = async (player_id: string) => {
 describe('InstanceSequelizeRepository', () => {
     let repository: InstanceSequelizeRepository;
 
-    beforeAll(async () => {
-        await instanceModelSynced;
-        await instanceParticipantsModelSynced;
-        await playerModelSynced;
-    });
-
     beforeEach(async () => {
         repository = new InstanceSequelizeRepository();
-        await InstanceParticipantsModel.destroy({ where: {}, truncate: true });
-        await InstanceModel.destroy({ where: {}, truncate: true });
-        await PlayerModel.destroy({ where: {}, truncate: true });
+        await SEQUELIZE_CONFIG.truncate();
+    });
+    afterAll(async () => {
+        await SEQUELIZE_CONFIG.truncate();
     });
 
-    afterAll(async () => {
-        await SEQUELIZE_CONFIG.drop();
-        await SEQUELIZE_CONFIG.close();
-    });
+
 
     describe('save', () => {
         it('deve persistir a instance no banco de dados', async () => {
@@ -79,7 +77,7 @@ describe('InstanceSequelizeRepository', () => {
             expect(record!.player_id).toBe(instance.player_id.toString());
             expect(record!.status).toBe(InstanceStatus.PENDING);
             expect(record!.difficulty).toBe(InstanceDifficulty.NORMAL);
-            expect(record!.current_floor).toBe(1);
+            expect(record!.campaign_chapter_floor_id).toBe(VALID_FLOOR_ID);
         });
 
         it('deve persistir os participants na tabela de participantes', async () => {
@@ -218,7 +216,7 @@ describe('InstanceSequelizeRepository', () => {
                 player_id: new PlayerId(VALID_PLAYER_ID),
                 status: InstanceStatus.RUNNING,
                 difficulty: InstanceDifficulty.NORMAL,
-                current_floor: 1,
+                campaign_chapter_floor_id: new CampaignChapterFloorId(VALID_FLOOR_ID),
                 started_at: VALID_STARTED_AT,
                 participants: [new PlayerId(VALID_PLAYER_ID)],
             });
@@ -229,7 +227,8 @@ describe('InstanceSequelizeRepository', () => {
             expect(record!.status).toBe(InstanceStatus.RUNNING);
         });
 
-        it('deve atualizar o current_floor da instance', async () => {
+        it('deve atualizar o campaign_chapter_floor_id da instance', async () => {
+            const NEW_FLOOR_ID = 'e1f2a3b4-c5d6-7890-abcd-ef1234567894';
             await seedPlayer(VALID_PLAYER_ID);
             await seedModel();
             const instance = Instance.rehydrate({
@@ -237,7 +236,7 @@ describe('InstanceSequelizeRepository', () => {
                 player_id: new PlayerId(VALID_PLAYER_ID),
                 status: InstanceStatus.RUNNING,
                 difficulty: InstanceDifficulty.NORMAL,
-                current_floor: 3,
+                campaign_chapter_floor_id: new CampaignChapterFloorId(NEW_FLOOR_ID),
                 started_at: VALID_STARTED_AT,
                 participants: [new PlayerId(VALID_PLAYER_ID)],
             });
@@ -245,7 +244,7 @@ describe('InstanceSequelizeRepository', () => {
             await repository.update(instance);
 
             const record = await InstanceModel.findOne({ where: { id: VALID_ID } });
-            expect(record!.current_floor).toBe(3);
+            expect(record!.campaign_chapter_floor_id).toBe(NEW_FLOOR_ID);
         });
 
         it('deve atualizar os participants da instance', async () => {
@@ -257,7 +256,7 @@ describe('InstanceSequelizeRepository', () => {
                 player_id: new PlayerId(VALID_PLAYER_ID),
                 status: InstanceStatus.PENDING,
                 difficulty: InstanceDifficulty.NORMAL,
-                current_floor: 1,
+                campaign_chapter_floor_id: new CampaignChapterFloorId(VALID_FLOOR_ID),
                 started_at: VALID_STARTED_AT,
                 participants: [new PlayerId(VALID_PLAYER_ID), new PlayerId(OTHER_PLAYER_ID)],
             });

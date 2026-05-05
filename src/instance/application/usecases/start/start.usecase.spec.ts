@@ -1,5 +1,6 @@
 import { PlayerId } from '@player/domain/player.aggregate';
 import { INSTANCE_RULES, Instance, InstanceDifficulty, InstanceId, InstanceStatus } from '@instance/domain/instance.aggregate';
+import { CampaignChapterFloorId } from '@campaign/domain/entities/campaign-chapter-floor.entity';
 import { IInstanceRepository } from '@instance/domain/repositories/instance.repository';
 import { InstanceNotFoundError, InstanceNotPendingError, InsufficientPlayersError, NotInstanceCreatorError } from '@instance/domain/errors';
 import { InstanceExistsByIdValidation } from '@instance/application/validations/instance_exists_by_id.validation';
@@ -44,7 +45,7 @@ const makeSut = (): Sut => {
 
 const makeInstanceWithPlayers = (extraPlayers = INSTANCE_RULES.MIN_PLAYERS.value - 1): { instance: Instance; creator_id: PlayerId } => {
     const creator_id = new PlayerId();
-    const instance = Instance.create({ player_id: creator_id, difficulty: InstanceDifficulty.NORMAL });
+    const instance = Instance.create({ player_id: creator_id, difficulty: InstanceDifficulty.NORMAL, campaign_chapter_floor_id: new CampaignChapterFloorId() });
     for (let i = 0; i < extraPlayers; i++) {
         instance.addParticipant(new PlayerId());
     }
@@ -181,7 +182,7 @@ describe('StartInstanceUsecase', () => {
         it('deve falhar se a instância estiver ABANDONED', async () => {
             const { usecase, instanceRepository } = makeSut();
             const creator_id = new PlayerId();
-            const instance = Instance.create({ player_id: creator_id, difficulty: InstanceDifficulty.NORMAL });
+            const instance = Instance.create({ player_id: creator_id, difficulty: InstanceDifficulty.NORMAL, campaign_chapter_floor_id: new CampaignChapterFloorId() });
             instance.abandon();
             instanceRepository.instances.push(instance);
 
@@ -195,7 +196,7 @@ describe('StartInstanceUsecase', () => {
         it('deve falhar se não houver jogadores suficientes para iniciar', async () => {
             const { usecase, instanceRepository } = makeSut();
             const creator_id = new PlayerId();
-            const instance = Instance.create({ player_id: creator_id, difficulty: InstanceDifficulty.NORMAL });
+            const instance = Instance.create({ player_id: creator_id, difficulty: InstanceDifficulty.NORMAL, campaign_chapter_floor_id: new CampaignChapterFloorId() });
             instanceRepository.instances.push(instance);
 
             const [_, error] = (

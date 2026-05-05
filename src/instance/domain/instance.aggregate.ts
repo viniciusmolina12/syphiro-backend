@@ -2,6 +2,7 @@ import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { Either } from '@shared/either';
 import { EntityId } from '@shared/entity-id.vo';
 import { PlayerId } from '@player/domain/player.aggregate';
+import { CampaignChapterFloorId } from '@campaign/domain/entities/campaign-chapter-floor.entity';
 import { InstanceFullError, InstanceNotPendingError, InstanceNotRunningError, InsufficientPlayersError } from '@instance/domain/errors';
 
 export class InstanceId extends EntityId {}
@@ -30,7 +31,7 @@ interface InstanceConstructorProps {
     player_id: PlayerId;
     status: InstanceStatus;
     difficulty: InstanceDifficulty;
-    current_floor: number;
+    campaign_chapter_floor_id: CampaignChapterFloorId;
     started_at: Date;
     participants: PlayerId[];
 }
@@ -38,6 +39,7 @@ interface InstanceConstructorProps {
 export interface CreateInstanceCommand {
     player_id: PlayerId;
     difficulty: InstanceDifficulty;
+    campaign_chapter_floor_id: CampaignChapterFloorId;
 }
 
 export class Instance extends AggregateRoot {
@@ -46,7 +48,7 @@ export class Instance extends AggregateRoot {
     public readonly difficulty: InstanceDifficulty;
     public readonly started_at: Date;
     private _status: InstanceStatus;
-    private _current_floor: number;
+    private _campaign_chapter_floor_id: CampaignChapterFloorId;
     private _participants: PlayerId[];
 
     private constructor(props: InstanceConstructorProps) {
@@ -56,7 +58,7 @@ export class Instance extends AggregateRoot {
         this.difficulty = props.difficulty;
         this.started_at = props.started_at;
         this._status = props.status;
-        this._current_floor = props.current_floor;
+        this._campaign_chapter_floor_id = props.campaign_chapter_floor_id;
         this._participants = props.participants;
     }
 
@@ -64,15 +66,14 @@ export class Instance extends AggregateRoot {
         return new Instance(props);
     }
 
-    static create(command?: CreateInstanceCommand): Instance {
-        const player_id = command?.player_id ?? new PlayerId();
+    static create(command: CreateInstanceCommand): Instance {
         return new Instance({
-            player_id,
-            difficulty: command?.difficulty ?? InstanceDifficulty.NORMAL,
+            player_id: command.player_id,
+            difficulty: command.difficulty,
             status: InstanceStatus.PENDING,
-            current_floor: 1,
+            campaign_chapter_floor_id: command.campaign_chapter_floor_id,
             started_at: new Date(),
-            participants: [player_id],
+            participants: [command.player_id],
         });
     }
 
@@ -80,8 +81,8 @@ export class Instance extends AggregateRoot {
         return this._status;
     }
 
-    get current_floor(): number {
-        return this._current_floor;
+    get campaign_chapter_floor_id(): CampaignChapterFloorId {
+        return this._campaign_chapter_floor_id;
     }
 
     get participants(): ReadonlyArray<PlayerId> {
@@ -122,8 +123,8 @@ export class Instance extends AggregateRoot {
         return Either.ok(void 0);
     }
 
-    advanceFloor(): void {
-        this._current_floor++;
+    advanceFloor(floor_id: CampaignChapterFloorId): void {
+        this._campaign_chapter_floor_id = floor_id;
     }
 
     complete(): Either<void, InstanceNotRunningError> {

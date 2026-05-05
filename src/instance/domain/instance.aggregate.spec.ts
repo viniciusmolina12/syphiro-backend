@@ -1,9 +1,10 @@
 import { PlayerId } from '@player/domain/player.aggregate';
 import { INSTANCE_RULES, Instance, InstanceDifficulty, InstanceStatus } from '@instance/domain/instance.aggregate';
 import { InstanceNotRunningError, InstanceNotPendingError, InsufficientPlayersError } from '@instance/domain/errors';
+import { CampaignChapterFloorId } from '@campaign/domain/entities/campaign-chapter-floor.entity';
 
 const makePendingInstance = () =>
-    Instance.create({ player_id: new PlayerId(), difficulty: InstanceDifficulty.NORMAL });
+    Instance.create({ player_id: new PlayerId(), difficulty: InstanceDifficulty.NORMAL, campaign_chapter_floor_id: new CampaignChapterFloorId() });
 
 const makeRunningInstance = () => {
     const instance = makePendingInstance();

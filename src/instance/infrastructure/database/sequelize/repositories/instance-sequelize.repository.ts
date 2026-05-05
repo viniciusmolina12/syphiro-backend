@@ -55,7 +55,7 @@ export class InstanceSequelizeRepository implements IInstanceRepository {
             player_id: instance.player_id.toString(),
             status: instance.status,
             difficulty: instance.difficulty,
-            current_floor: instance.current_floor,
+            campaign_chapter_floor_id: instance.campaign_chapter_floor_id.toString(),
             started_at: instance.started_at,
         });
         } catch (error) {
@@ -73,7 +73,7 @@ export class InstanceSequelizeRepository implements IInstanceRepository {
         await InstanceModel.update(
             {
                 status: instance.status,
-                current_floor: instance.current_floor,
+                campaign_chapter_floor_id: instance.campaign_chapter_floor_id.toString(),
             },
             { where: { id: instance.id.toString() } },
         );

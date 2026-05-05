@@ -31,6 +31,7 @@ InstanceParticipantsModel.init(
     {
         sequelize: SEQUELIZE_CONFIG,
         modelName: "InstanceParticipant",
+        tableName: 'instance_participants',
         timestamps: false,
     },
 );

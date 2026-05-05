@@ -1,6 +1,6 @@
 import { Either } from "@shared/either";
 import { InstanceExistsByIdValidation } from "@instance/application/validations/instance_exists_by_id.validation";
-import { Instance, InstanceId } from "@instance/domain/instance.aggregate";
+import { Instance, InstanceDifficulty, InstanceId } from "@instance/domain/instance.aggregate";
 import { IInstanceRepository } from "@instance/domain/repositories/instance.repository";
 import { PlayerId } from "@player/domain/player.aggregate";
 import { Character, CharacterId } from "@character/domain/character.aggregate";
@@ -12,6 +12,7 @@ import { CreateCharacterUsecase } from "@character/application/usecases/create/c
 import { ProfessionsExistsByIdsValidation } from "@character/application/validations/professions_exists_by_ids.validation";
 import { Profession, ProfessionId } from "@profession/domain/profession.aggregate";
 import { IProfessionRepository } from "@character/domain/repositories/profession.repository";
+import { CampaignChapterFloorId } from "@campaign/domain/entities/campaign-chapter-floor.entity";
 
 
 class CharacterRepositoryStub implements ICharacterRepository {
@@ -38,7 +39,7 @@ class ClassRepositoryStub implements IClassRepository {
 }
 class InstanceRepositoryStub implements IInstanceRepository {
     async findById(_: InstanceId): Promise<Instance | null> {
-        return Instance.create();
+        return Instance.create({player_id: new PlayerId(), campaign_chapter_floor_id: new CampaignChapterFloorId(), difficulty: InstanceDifficulty.EASY});
     }
     async existsById(_: InstanceId): Promise<boolean> {
         return true;

@@ -7,7 +7,7 @@ export const STATS_RULES = {
         value: 0,
     },
 } as const;
-export class Stats extends ValueObject {
+export class  Stats extends ValueObject {
     protected constructor(
         public readonly health: number,
     ) {

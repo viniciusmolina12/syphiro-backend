@@ -1,5 +1,6 @@
 import { PlayerId } from '@player/domain/player.aggregate';
 import { Instance, INSTANCE_RULES, InstanceDifficulty, InstanceId, InstanceStatus } from '@instance/domain/instance.aggregate';
+import { CampaignChapterFloorId } from '@campaign/domain/entities/campaign-chapter-floor.entity';
 import { IInstanceRepository } from '@instance/domain/repositories/instance.repository';
 import { InstanceFullError, InstanceNotFoundError, InstanceNotPendingError, PlayerAlreadyInInstanceError } from '@instance/domain/errors';
 import { JoinInstanceUsecase } from '@instance/application/usecases/join/join.usecase';
@@ -47,10 +48,10 @@ const makeSut = (): Sut => {
 };
 
 const makePendingInstance = (): Instance =>
-    Instance.create({ player_id: new PlayerId(), difficulty: InstanceDifficulty.NORMAL });
+    Instance.create({ player_id: new PlayerId(), difficulty: InstanceDifficulty.NORMAL, campaign_chapter_floor_id: new CampaignChapterFloorId() });
 
 const makeRunningInstance = (): Instance => {
-    const instance = Instance.create({ player_id: new PlayerId(), difficulty: InstanceDifficulty.NORMAL });
+    const instance = Instance.create({ player_id: new PlayerId(), difficulty: InstanceDifficulty.NORMAL, campaign_chapter_floor_id: new CampaignChapterFloorId() });
     for (let i = 1; i < INSTANCE_RULES.MIN_PLAYERS.value; i++) {
         instance.addParticipant(new PlayerId());
     }
@@ -191,7 +192,7 @@ describe('JoinInstanceUsecase', () => {
         it('deve falhar se o jogador já for participante desta instância', async () => {
             const { usecase, instanceRepository } = makeSut();
             const creator_id = new PlayerId();
-            const instance = Instance.create({ player_id: creator_id, difficulty: InstanceDifficulty.NORMAL });
+            const instance = Instance.create({ player_id: creator_id, difficulty: InstanceDifficulty.NORMAL, campaign_chapter_floor_id: new CampaignChapterFloorId() });
             instanceRepository.instances.push(instance);
 
             const [_, error] = (
@@ -223,7 +224,7 @@ describe('JoinInstanceUsecase', () => {
             const { usecase, instanceRepository } = makeSut();
             const player_id = new PlayerId();
 
-            const running_instance = Instance.create({ player_id: new PlayerId(), difficulty: InstanceDifficulty.NORMAL });
+            const running_instance = Instance.create({ player_id: new PlayerId(), difficulty: InstanceDifficulty.NORMAL, campaign_chapter_floor_id: new CampaignChapterFloorId() });
             for (let i = 1; i < INSTANCE_RULES.MIN_PLAYERS.value; i++) {
                 running_instance.addParticipant(new PlayerId());
             }

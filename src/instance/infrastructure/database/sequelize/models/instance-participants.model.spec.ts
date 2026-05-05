@@ -10,7 +10,7 @@ describe('InstanceParticipantsModel', () => {
     });
 
     afterAll(async () => {
-        await SEQUELIZE_CONFIG.close();
+        // await SEQUELIZE_CONFIG.close();
     });
 
     it('deve criar um instance participants model com os atributos corretos', () => {

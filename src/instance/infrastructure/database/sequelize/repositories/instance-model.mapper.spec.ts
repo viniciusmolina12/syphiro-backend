@@ -1,12 +1,12 @@
-import { SEQUELIZE_CONFIG } from "@shared/infrastructure/database/sequelize/config";
 import { InstanceModel } from "../models/instance.model";
-import { instanceParticipantsModelSynced } from "../models/instance-participants.model";
 import { InstanceModelMapper } from "./instance-model.mapper";
 import { Instance, InstanceId, InstanceStatus, InstanceDifficulty } from "@instance/domain/instance.aggregate";
 import { PlayerId } from "@player/domain/player.aggregate";
+import { CampaignChapterFloorId } from "@campaign/domain/entities/campaign-chapter-floor.entity";
 
 const VALID_ID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
 const VALID_PLAYER_ID = 'b1c2d3e4-f5a6-7890-abcd-ef1234567891';
+const VALID_FLOOR_ID = 'c1d2e3f4-a5b6-7890-abcd-ef1234567892';
 const VALID_STARTED_AT = new Date('2024-01-01T00:00:00Z');
 
 const makeModel = (): InstanceModel => {
@@ -15,7 +15,7 @@ const makeModel = (): InstanceModel => {
         player_id: VALID_PLAYER_ID,
         status: InstanceStatus.PENDING,
         difficulty: InstanceDifficulty.NORMAL,
-        current_floor: 1,
+        campaign_chapter_floor_id: VALID_FLOOR_ID,
         started_at: VALID_STARTED_AT,
     });
     model.instanceParticipants = [{ instance_id: VALID_ID, player_id: VALID_PLAYER_ID }];
@@ -28,19 +28,12 @@ const makeInstance = (): Instance =>
         player_id: new PlayerId(VALID_PLAYER_ID),
         status: InstanceStatus.PENDING,
         difficulty: InstanceDifficulty.NORMAL,
-        current_floor: 1,
+        campaign_chapter_floor_id: new CampaignChapterFloorId(VALID_FLOOR_ID),
         started_at: VALID_STARTED_AT,
         participants: [new PlayerId(VALID_PLAYER_ID)],
     });
 
 describe('InstanceModelMapper', () => {
-    beforeAll(async () => {
-        await instanceParticipantsModelSynced;
-    });
-
-    afterAll(async () => {
-        await SEQUELIZE_CONFIG.close();
-    });
 
     describe('toDomain', () => {
         it('deve retornar uma instância de Instance', () => {
@@ -75,10 +68,11 @@ describe('InstanceModelMapper', () => {
             expect(result.difficulty).toBe(InstanceDifficulty.NORMAL);
         });
 
-        it('deve mapear o current_floor corretamente', () => {
+        it('deve mapear o campaign_chapter_floor_id corretamente', () => {
             const result = InstanceModelMapper.toDomain(makeModel());
 
-            expect(result.current_floor).toBe(1);
+            expect(result.campaign_chapter_floor_id).toBeInstanceOf(CampaignChapterFloorId);
+            expect(result.campaign_chapter_floor_id.toString()).toBe(VALID_FLOOR_ID);
         });
 
         it('deve mapear o started_at corretamente', () => {
@@ -133,10 +127,10 @@ describe('InstanceModelMapper', () => {
             expect(result.difficulty).toBe(InstanceDifficulty.NORMAL);
         });
 
-        it('deve mapear o current_floor corretamente', () => {
+        it('deve mapear o campaign_chapter_floor_id corretamente', () => {
             const result = InstanceModelMapper.toModel(makeInstance());
 
-            expect(result.current_floor).toBe(1);
+            expect(result.campaign_chapter_floor_id).toBe(VALID_FLOOR_ID);
         });
 
         it('deve mapear o started_at corretamente', () => {

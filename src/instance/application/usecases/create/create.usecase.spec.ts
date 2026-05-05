@@ -3,6 +3,7 @@ import { Instance, InstanceDifficulty, InstanceId, InstanceStatus } from '@insta
 import { IInstanceRepository } from '@instance/domain/repositories/instance.repository';
 import { PlayerAlreadyHasActiveInstanceError } from '@instance/domain/errors';
 import { CreateInstanceUsecase } from '@instance/application/usecases/create/create.usecase';
+import { CampaignChapterFloorId } from '@campaign/domain/entities/campaign-chapter-floor.entity';
 
 class InMemoryInstanceRepository implements IInstanceRepository {
     public instances: Instance[] = [];
@@ -40,9 +41,10 @@ const makeSut = (): Sut => {
     return { usecase, instanceRepository };
 };
 
-const makeInput = (overrides: Partial<{ player_id: PlayerId; difficulty: InstanceDifficulty }> = {}) => ({
+const makeInput = (overrides: Partial<{ player_id: PlayerId; difficulty: InstanceDifficulty; campaign_chapter_floor_id: CampaignChapterFloorId }> = {}) => ({
     player_id: new PlayerId(),
     difficulty: InstanceDifficulty.NORMAL,
+    campaign_chapter_floor_id: new CampaignChapterFloorId(),
     ...overrides,
 });
 
@@ -56,11 +58,12 @@ describe('CreateInstanceUsecase', () => {
             expect(instance.status).toBe(InstanceStatus.PENDING);
         });
 
-        it('deve criar uma instância começando no andar 1', async () => {
+        it('deve criar uma instância com o campaign_chapter_floor_id fornecido', async () => {
             const { usecase } = makeSut();
-            const [instance] = (await usecase.execute(makeInput())).asArray();
+            const campaign_chapter_floor_id = new CampaignChapterFloorId();
+            const [instance] = (await usecase.execute(makeInput({ campaign_chapter_floor_id }))).asArray();
 
-            expect(instance.current_floor).toBe(1);
+            expect(instance.campaign_chapter_floor_id.equals(campaign_chapter_floor_id)).toBe(true);
         });
 
         it('deve criar uma instância com a dificuldade informada', async () => {
