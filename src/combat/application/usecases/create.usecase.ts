@@ -16,6 +16,8 @@ interface CreateCombatUsecaseInput {
     instance_id: string;
 }
 
+
+// TODO - BUSCAR O CAMPAIGN CHAPTER FLOOR QUE ESTA NA INSTANCIA E GERAR OS INIMIGOS E O COMBATE A PARTIR DELA. 
 export class CreateCombatUsecase {
     constructor(
         private readonly combatRepository: ICombatRepository,
