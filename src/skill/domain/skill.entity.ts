@@ -50,4 +50,8 @@ export class Skill {
     static create(command: SkillCreateCommand): Skill {
         return new Skill(command);
     }
+
+    static rehydrate(props: SkillConstructorProps): Skill {
+        return new Skill(props);
+    }
 }
