@@ -4,7 +4,11 @@ import { ClassSkill, ClassSkillId } from "@class/domain/class_skill";
 import { IClassSkillRepository } from "@class/domain/repositories/class-skill.repository";
 import { Enemy, EnemyId } from "@enemy/domain/enemy.aggregate";
 import { IEnemyRepository } from "@enemy/domain/repositories/enemy.repository";
-import { InstanceId } from "@instance/domain/instance.aggregate";
+import { Instance, InstanceId } from "@instance/domain/instance.aggregate";
+import { IInstanceRepository } from "@instance/domain/repositories/instance.repository";
+import { PlayerId } from "@player/domain/player.aggregate";
+import { CampaignChapterFloor, CampaignChapterFloorId } from "@campaign/domain/entities/campaign-chapter-floor.entity";
+import { ICampaignChapterFloorRepository } from "@campaign/domain/repositories/campaign-chapter-floor.repository";
 import { Combat, CombatId } from "@combat/domain/combat.aggregate";
 import { ICombatRepository } from "@combat/domain/repositories/combat.repository";
 
@@ -86,5 +90,38 @@ export class InMemoryClassSkillRepository implements IClassSkillRepository {
 
     async save(skill: ClassSkill): Promise<void> {
         this.classSkills.push(skill);
+    }
+}
+
+export class InMemoryInstanceRepository implements IInstanceRepository {
+    public instances: Instance[] = [];
+
+    async findById(id: InstanceId): Promise<Instance | null> {
+        return this.instances.find(i => i.id.equals(id)) ?? null;
+    }
+    async existsById(id: InstanceId): Promise<boolean> {
+        return this.instances.some(i => i.id.equals(id));
+    }
+    async findActiveByPlayerId(player_id: PlayerId): Promise<Instance | null> {
+        return this.instances.find(i => i.player_id.equals(player_id)) ?? null;
+    }
+    async save(instance: Instance): Promise<void> {
+        this.instances.push(instance);
+    }
+    async update(instance: Instance): Promise<void> {
+        const index = this.instances.findIndex(i => i.id.equals(instance.id));
+        if (index !== -1) this.instances[index] = instance;
+    }
+}
+
+export class InMemoryCampaignChapterFloorRepository implements ICampaignChapterFloorRepository {
+    private floors: CampaignChapterFloor[] = [];
+
+    async findById(id: CampaignChapterFloorId): Promise<CampaignChapterFloor | null> {
+        return this.floors.find(f => f.id.equals(id)) ?? null;
+    }
+
+    save(floor: CampaignChapterFloor): void {
+        this.floors.push(floor);
     }
 }
