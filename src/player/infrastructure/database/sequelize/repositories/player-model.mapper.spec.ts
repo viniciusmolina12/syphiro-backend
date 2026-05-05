@@ -15,18 +15,11 @@ const makeModel = (): PlayerModel =>
 const makePlayer = (): Player =>
     Player.rehydrate({
         id: new PlayerId(VALID_ID),
-        identityId: new IdentityId(VALID_IDENTITY_ID),
+        identity_id: new IdentityId(VALID_IDENTITY_ID),
         name: Name.create(VALID_NAME).ok,
     });
 
 describe('PlayerModelMapper', () => {
-    beforeAll(async () => {
-        await playerModelSynced;
-    });
-
-    afterAll(async () => {
-        await SEQUELIZE_CONFIG.close();
-    });
 
     describe('toDomain', () => {
         it('deve retornar uma instância de Player', () => {
@@ -45,8 +38,8 @@ describe('PlayerModelMapper', () => {
         it('deve mapear o identityId corretamente', () => {
             const result = PlayerModelMapper.toDomain(makeModel());
 
-            expect(result.identityId).toBeInstanceOf(IdentityId);
-            expect(result.identityId.value).toBe(VALID_IDENTITY_ID);
+            expect(result.identity_id).toBeInstanceOf(IdentityId);
+            expect(result.identity_id.value).toBe(VALID_IDENTITY_ID);
         });
 
         it('deve mapear o name corretamente', () => {

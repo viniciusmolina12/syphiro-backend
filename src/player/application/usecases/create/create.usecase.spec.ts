@@ -9,11 +9,11 @@ class InMemoryPlayerRepository implements IPlayerRepository {
     public players: Player[] = [];
 
     async findByIdentityId(identityId: IdentityId): Promise<Player | null> {
-        return this.players.find(p => p.identityId.equals(identityId)) ?? null;
+        return this.players.find(p => p.identity_id.equals(identityId)) ?? null;
     }
 
     async existsByIdentityId(identityId: IdentityId): Promise<boolean> {
-        return this.players.some(p => p.identityId.equals(identityId));
+        return this.players.some(p => p.identity_id.equals(identityId));
     }
 
     async save(player: Player): Promise<void> {
@@ -33,7 +33,7 @@ const makeSut = (): Sut => {
 };
 
 const validInput = {
-    identityId: 'cognito|abc-123-def-456',
+    identity_id: 'cognito|abc-123-def-456',
     name: 'Jon Snow',
 };
 
@@ -53,7 +53,7 @@ describe('CreatePlayerUsecase', () => {
 
             const [result] = (await usecase.execute(validInput)).asArray();
 
-            expect(result.identityId.value).toBe(validInput.identityId);
+            expect(result.identity_id.value).toBe(validInput.identity_id);
             expect(result.name.value).toBe(validInput.name);
             expect(result.id).toBeInstanceOf(PlayerId);
         });
@@ -93,7 +93,7 @@ describe('CreatePlayerUsecase', () => {
             await usecase.execute(validInput);
 
             const [_, error] = (
-                await usecase.execute({ identityId: validInput.identityId, name: 'Different Name' })
+                await usecase.execute({ identity_id: validInput.identity_id, name: 'Different Name' })
             ).asArray();
 
             expect(error).toBeInstanceOf(PlayerAlreadyExistsError);
@@ -103,7 +103,7 @@ describe('CreatePlayerUsecase', () => {
             const { usecase } = makeSut();
 
             const [_, error] = (
-                await usecase.execute({ identityId: '', name: 'Jon Snow' })
+                await usecase.execute({ identity_id: '', name: 'Jon Snow' })
             ).asArray();
 
             expect(error).toBeInstanceOf(InvalidIdentityIdError);
@@ -113,7 +113,7 @@ describe('CreatePlayerUsecase', () => {
             const { usecase } = makeSut();
 
             const [_, error] = (
-                await usecase.execute({ identityId: validInput.identityId, name: 'Jo' })
+                await usecase.execute({ identity_id: validInput.identity_id, name: 'Jo' })
             ).asArray();
 
             expect(error).toBeInstanceOf(InvalidNameError);
@@ -123,7 +123,7 @@ describe('CreatePlayerUsecase', () => {
             const { usecase } = makeSut();
 
             const [_, error] = (
-                await usecase.execute({ identityId: validInput.identityId, name: 'a'.repeat(256) })
+                await usecase.execute({ identity_id: validInput.identity_id, name: 'a'.repeat(256) })
             ).asArray();
 
             expect(error).toBeInstanceOf(InvalidNameError);

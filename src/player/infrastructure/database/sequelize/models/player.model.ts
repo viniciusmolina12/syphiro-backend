@@ -25,7 +25,7 @@ export class PlayerModel extends Model<PlayerAttributes, PlayerCreationAttribute
 }
 
 PlayerModel.init(
-    {
+    { 
         id: {
             type: DataTypes.STRING,
             primaryKey: true,
@@ -52,6 +52,8 @@ PlayerModel.init(
     {
         sequelize: SEQUELIZE_CONFIG,
         modelName: "Player",
+        tableName: 'players',
+        timestamps: false,
     },
 );
 

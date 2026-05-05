@@ -2,12 +2,9 @@ import { SEQUELIZE_CONFIG } from "@shared/infrastructure/database/sequelize/conf
 import { PlayerModel, playerModelSynced } from "./player.model";
 
 describe('PlayerModel', () => {
-    beforeAll(async () => {
-        await playerModelSynced;
-    });
 
     afterAll(async () => {
-        await SEQUELIZE_CONFIG.close();
+        await SEQUELIZE_CONFIG.truncate();
     });
 
     it('should create a player model', () => {

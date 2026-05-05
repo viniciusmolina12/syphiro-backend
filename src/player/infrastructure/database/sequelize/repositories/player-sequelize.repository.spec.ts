@@ -14,19 +14,13 @@ const makePlayer = (): Player =>
 describe('PlayerSequelizeRepository', () => {
     let repository: PlayerSequelizeRepository;
 
-    // beforeAll(async () => {
-    //     await playerModelSynced;
-    // });
-
     beforeEach(async () => {
         repository = new PlayerSequelizeRepository();
-        // await PlayerModel.destroy({ where: {}, truncate: true });
-       
+        await SEQUELIZE_CONFIG.truncate();
     });
 
     afterAll(async () => {
-        await SEQUELIZE_CONFIG.drop();
-        await SEQUELIZE_CONFIG.close();
+        await SEQUELIZE_CONFIG.truncate();
     });
 
     describe('save', () => {

@@ -7,7 +7,7 @@ export class PlayerModelMapper {
     static toDomain(model: PlayerModel): Player {
         return Player.rehydrate({
             id: new PlayerId(model.id),
-            identityId:  new IdentityId(model.identity_id),
+            identity_id:  new IdentityId(model.identity_id),
             name: Name.create(model.name).ok,
         });
     }
@@ -16,7 +16,7 @@ export class PlayerModelMapper {
         return new PlayerModel({
             id: player.id.toString(),
             name: player.name.value,
-            identity_id: player.identityId.value,
+            identity_id: player.identity_id.value,
         });
     }
 }
